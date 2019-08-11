@@ -1,0 +1,112 @@
+
+/* Style imported from HTAM project */
+
+
+body{
+	background-color: #444;
+	color: #333;
+	font-family: Verdana, sans-serif;
+	font-size: 10.5pt;
+	line-height: 150%;
+}
+h1,h2,h3,h4{
+	color:  #333;
+}
+h1{
+	font-size: 140%;
+	color:  #4C5F7D;
+}
+header, nav, article, footer{
+	max-width: 1000px;
+	width: auto;
+	margin: 0 auto;
+	padding: 10px;
+}
+header{
+	background-color: #CCC;
+	border-bottom: 1px solid #AAA;
+	text-align: center;
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+}
+nav{
+	background-color: #e6e8ed;
+	border-bottom: 1px solid #999;
+}
+nav span{
+	margin-right: 5px;
+	display:  inline-block;	
+}
+a{
+	color: #3869b7;
+}
+a:hover{
+	color: #7d38b7;
+}
+footer a{
+	color: #444;
+}
+footer a:hover{
+	color: #CCC;
+}
+article{
+	background-color: #FAFAFA;
+	min-height: 150px;
+}
+footer{
+	background-color: #999;
+	color: #FFF;
+	text-align: center;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	font-size: 80%;
+}
+span.good{
+	color: green;
+}
+span.bad{
+	color: darkred;
+}
+span.box{
+	display: block;
+	border-radius: 3px;
+	padding: 10px;
+	background-color: #e6e8ed;
+}
+span.box.good{
+	background-color: #dce5da;
+}
+span.box.bad{
+	background-color: #e5dada;
+}
+ul.dir{
+	list-style-type: none;
+}
+
+ul.dir li{
+	margin-left: -15px;
+}
+input{
+	margin: 5px;
+}
+.responsive{
+	overflow-x: auto;
+}
+table{
+	width: 100%;
+}
+td{
+	padding: 3px;
+}
+tr{
+	background-color:  #E9E9E9;
+}
+tr:nth-child(odd){
+	background-color:  #FFF;
+}
+#checker{
+	font-size:  80%;
+}
+.tdcenter td{
+	text-align: center;
+}
