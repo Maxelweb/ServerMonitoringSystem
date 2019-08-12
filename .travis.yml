@@ -35,4 +35,4 @@ script:
   - build_platform esp32
 
 notifications:
-  webhooks: $TELEGRAM
+  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
