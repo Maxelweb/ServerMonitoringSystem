@@ -29,7 +29,10 @@ install:
   # - arduino --install-library "Adafruit FONA Library"
 
 script:
-  - build_main_platforms
+  # - build_main_platforms
+  - build_platform uno 
+  - build_platform esp8266
+  - build_platform esp32
 
 notifications:
   webhooks: TELEGRAM_NOTIFICATION
