@@ -4,6 +4,7 @@
 	require_once 'resources/core.php';
 	require_once 'template/header.php';
 
+
 	switch ($s) 
 	{
 		case 'updates':
