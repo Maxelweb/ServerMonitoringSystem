@@ -15,22 +15,24 @@ git:
   quiet: true
 
 
-env:
-  global:
+# env:
+  # global:
      # You can uncomment this to explicitly choose an (old) version of the Arduino IDE
      #- ARDUINO_IDE_VERSION="1.8.7"
 
 before_install:
   - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
 
-install:
+# install:
   # Note that every library should be installed in a seperate command
   # - arduino --install-library "Adafruit SleepyDog Library"
   # - arduino --install-library "Adafruit FONA Library"
 
 script:
   # - build_main_platforms
-  - build_platform uno,esp8266,esp32
+  - build_platform uno 
+  - build_platform esp8266
+  - build_platform esp32
 
 notifications:
-  webhooks: TELEGRAM
+  webhooks: $TELEGRAM
