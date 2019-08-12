@@ -6,13 +6,15 @@
 	<meta name="description" content="Server Monitoring System">
   	<meta name="keywords" content="SMS,Monitoring,System,Server">
   	<meta name="author" content="Mariano Sciacco">
-  	<link rel="stylesheet" type="text/css" href="style/main.css">
+  	<link rel="stylesheet" href="style/main.css">
+  	<link rel="stylesheet" href="style/widgets.css">
+  	<link rel="stylesheet" href="style/fontawesome/all.min.css">
 </head>
 <body>
 
 <header>
 	<h1>Server Monitoring System</h1>
-	<small><strong>Connection:</strong> //</small>
+	<strong><?=NAME;?></strong>
 </header>
 
 <nav>

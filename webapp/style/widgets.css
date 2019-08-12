@@ -1,0 +1,56 @@
+
+.widgets-container{
+	width: auto;
+}
+
+.widgets-container .widget{
+	display: inline-block;
+	width: auto;
+	min-width: 48%;
+	height: auto;
+	background-color: #D2E1AD;
+	padding: 0;
+	margin: 10px 5px;
+	border-radius: 4px;
+	border-bottom: 1px solid #B1B9AB;
+
+	vertical-align: top;
+}
+
+.widget .title{
+	padding: 10px;
+	font-size: 130%;
+	font-weight: bold;
+	border-bottom: 1px solid #87A836;
+	color: #275E43;
+	background-color: #FAFAFA96;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.widget .title i{
+	margin-right: 3px;
+}
+
+.widget .content{
+	padding: 10px;
+	font-size: 120%;
+
+}
+
+@media only screen and (min-width: 1021px)
+{
+	.widgets-container .widget{
+		min-width: 480px;
+	}	
+}
+
+@media only screen and (max-width: 700px)
+{
+	.widgets-container .widget{
+		min-width: auto;
+		max-width: 100%;
+		display: block;
+		margin: 20px 0;
+	}	
+}

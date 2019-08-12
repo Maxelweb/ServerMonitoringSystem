@@ -1,6 +1,9 @@
 
 // Test iniziali
 
+#include "Arduino.h"
+#include "ServerMonitoringSystem.h"
+
 
 int ledPin = 13;
 

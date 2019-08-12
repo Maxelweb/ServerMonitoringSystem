@@ -1,5 +1,9 @@
 
-/* Style imported from HTAM project */
+/* 
+ *	 Server Monitoring System
+ *		Mariano Sciacco
+ *	 	 Web app CSS
+ */
 
 
 body{
@@ -14,7 +18,7 @@ h1,h2,h3,h4{
 }
 h1{
 	font-size: 140%;
-	color:  #4C5F7D;
+	color:  #4C7D7C;
 }
 header, nav, article, footer{
 	max-width: 1000px;
@@ -25,12 +29,12 @@ header, nav, article, footer{
 header{
 	background-color: #CCC;
 	border-bottom: 1px solid #AAA;
-	text-align: center;
+	text-align: left;
 	border-top-right-radius: 3px;
 	border-top-left-radius: 3px;
 }
 nav{
-	background-color: #e6e8ed;
+	background-color: #ede8e6;
 	border-bottom: 1px solid #999;
 }
 nav span{
@@ -54,9 +58,9 @@ article{
 	min-height: 150px;
 }
 footer{
-	background-color: #999;
+	background-color: #88a4a4;
 	color: #FFF;
-	text-align: center;
+	text-align: left;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
 	font-size: 80%;
@@ -110,3 +114,4 @@ tr:nth-child(odd){
 .tdcenter td{
 	text-align: center;
 }
+
