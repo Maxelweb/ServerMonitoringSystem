@@ -1,5 +1,4 @@
 <?php 
-namespace ServerMonitor\Extra;
 
 class Updates
 {

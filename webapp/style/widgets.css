@@ -36,7 +36,7 @@
 .widget .content{
 	padding: 10px;
 	font-size: 120%;
-
+	text-align: right;
 }
 
 @media only screen and (min-width: 1021px)
@@ -58,6 +58,14 @@
 
 
 /* Widget colors */
+
+.widget-default{
+}
+
+.widget-left .content{
+	text-align: left !important;
+}
+
 
 .widget-success{
 	background-color: #D2E1AD !important;

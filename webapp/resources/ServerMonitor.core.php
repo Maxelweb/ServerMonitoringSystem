@@ -1,6 +1,4 @@
 <?php 
-namespace ServerMonitor\Core;
-
 
 class ArduinoConnector
 {
@@ -53,13 +51,72 @@ class ArduinoConnector
 }
 
 
+class HardwareActivity
+{
+	private $platforms;
+	private $cplat = array();
+
+	function __construct($platformsArray)
+	{
+		if(!empty($platformsArray)) 
+		{
+			$this->platforms = $platformsArray;
+			$this->checkActivity();
+		}
+	}
+
+	function checkActivity()
+	{
+		foreach($this->platforms as $name => $ip)
+		{
+			$result = exec("ping -c 1 ".$ip);
+			$this->cplat[$name] = $result!=0;
+		}
+	}
+
+	function active()
+	{
+		$n = 0;
+		foreach($this->cplat as $n => $v)
+			$n += $v ? 1 : 0 ; 
+	}
+
+	function printWidget()
+	{
+		if(!empty($this->platforms))
+		{
+			echo '<div class="widget widget-default widget-left">
+					<div class="title"> <i class="fas fa-lg fa-server"></i> Hardware Activity</div>	
+					<div class="content">
+						<div class="responsive">
+							<table>';
+
+			if(!empty($this->cplat))
+				foreach ($this->cplat as $key => $value) 
+					echo "<tr>
+							<th>$key</th>
+							<td>".($value ? success("ONLINE",1) : error("OFFLINE",1))."</td>
+						  </tr>";
+
+			echo '			</table>
+					  	</div>
+					</div>
+				  </div>';
+		}
+	}
+}
+
 
 abstract class Sensor
 {
 	protected $value;
+	protected $content;
 	protected $name;
 	protected $icon;
+	protected $iconType = "fas";
 	protected $status;
+
+	abstract protected function build();
 
 	public function getName()
 	{
@@ -71,9 +128,23 @@ abstract class Sensor
 		return $this->value;
 	}
 
-	abstract protected function makeStatus();
+	public function getIcon()
+	{
+		return $this->icon;
+	}
 
-	abstract public function printWidget();
+	public function getIconType()
+	{
+		return $this->iconType;
+	}
+
+	public function printWidget()
+	{
+		echo '<div class="widget widget-'.$this->status.'">
+				<div class="title"> <i class="'.$this->iconType.' fa-lg fa-'.$this->icon.'"></i> '.$this->name.'</div>	
+				<div class="content">'.$this->content.'</div>
+			  </div>';
+	}
 	
 }
 
@@ -85,10 +156,10 @@ class Temperature extends Sensor
 		$this->name = "Room Temperature";
 		$this->icon = "thermometer-half";
 		$this->value = $jsonValue;
-		$this->makeStatus();
+		$this->build();
 	}
 
-	protected function makeStatus()
+	protected function build()
 	{
 		if($this->value < 2 || $this->value > 40)
 			$this->status = "danger";
@@ -97,14 +168,90 @@ class Temperature extends Sensor
 		else
 			$this->status = "success";
 
+		$this->content = $this->value . '&deg; C';
+	}
+}
+
+
+class Humidity extends Sensor
+{
+	function __construct($jsonValue)
+	{
+		$this->name = "Room Humidity";
+		$this->icon = "tint";
+		$this->value = $jsonValue;
+		$this->build();
 	}
 
-	public function printWidget()
+	protected function build()
 	{
-		echo '<div class="widget widget-'.$this->status.'">
-				<div class="title"> <i class="fas fa-lg fa-'.$this->icon.'"></i> '.$this->name.'</div>	
-				<div class="content">'.$this->value.'&deg; C</div>
-			  </div>';
+		if($this->value >= 80)
+			$this->status = "danger";
+		elseif($this->value >= 60)
+			$this->status = "warning";
+		else
+			$this->status = "success";
+
+		$this->content = $this->value . '&#37; <small>(0 - 100)</small>';
 	}
 
 }
+
+
+class Door extends Sensor
+{
+	function __construct($jsonValue)
+	{
+		$this->name = "Door";
+		$this->value = $jsonValue;
+		$this->build();
+	}
+
+	protected function build()
+	{
+		if($this->value == 1)
+		{
+			$this->status = "default-danger";
+			$this->content = 'The door is <strong>OPEN</strong>';
+			$this->icon = "door-open";
+		}
+		else
+		{
+			$this->status = "default-success";
+			$this->content = 'The door is <strong>CLOSED</strong>';
+			$this->icon = "door-closed";
+		}
+
+	}
+
+}
+
+class Light extends Sensor
+{
+	function __construct($jsonValue)
+	{
+		$this->name = "Light";
+		$this->value = $jsonValue;
+		$this->icon = "lightbulb";
+		$this->build();
+	}
+
+	protected function build()
+	{
+		if($this->value == 1)
+		{
+			$this->status = "default-warning";
+			$this->content = 'The light in the room is <strong>ACTIVE</strong>';
+			$this->iconType = "far";
+		}
+		else
+		{
+			$this->status = "default-success";
+			$this->content = 'The light in the room is <strong>INACTIVE</strong>';
+		}
+
+	}
+
+}
+
+

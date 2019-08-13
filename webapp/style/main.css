@@ -99,8 +99,8 @@ input{
 table{
 	width: 100%;
 }
-td{
-	padding: 3px;
+td,th{
+	padding: 3px 5px;
 }
 tr{
 	background-color:  #E9E9E9;
