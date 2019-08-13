@@ -9,6 +9,8 @@
   	<link rel="stylesheet" href="style/main.css">
   	<link rel="stylesheet" href="style/widgets.css">
   	<link rel="stylesheet" href="style/fontawesome/all.min.css">
+  	<script src="style/jquery-3.4.1.min.js"></script>
+  	<script src="resources/core.js"></script>
 </head>
 <body>
 
@@ -19,6 +21,7 @@
 
 <nav>
 	<span>&#x1F3E0; <a href="?">Dashboard</a></span>
+	<span>&#x1F5C3; <a href="?s=logs">Logs</a></span>
 	<span>&#x2615; <a href="?s=updates">Updates</a></span>
 </nav>
 

@@ -1,7 +1,7 @@
 <section>
 	<h3>&#x2615; Updates</h3>
 	<?php 
-		$hup = new Updates();
+		$hup = new ServerMonitor\Extra\Updates();
 		if($hup->latestVersion() == "N/A")
 			echo error("Unable to check for new updates. Try later or checkout the <a href='".REPO."'>official repository</a>.");
 		elseif($hup->currentVersion() != $hup->latestVersion()) 

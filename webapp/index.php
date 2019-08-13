@@ -1,12 +1,15 @@
 <?php
 	
 	require_once 'resources/config.php';
-	require_once 'resources/core.php';
 	require_once 'template/header.php';
 
 
 	switch ($s) 
 	{
+		case 'logs':
+			require_once 'resources/pages/logs.php';
+			break;
+
 		case 'updates':
 			require_once 'resources/pages/updates.php';
 			break;
