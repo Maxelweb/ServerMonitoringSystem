@@ -98,3 +98,13 @@
 	border-color:  #A87D36;
 	color: #a66c38;
 }
+
+
+.icon-blink {
+    animation: blinkerAnim 1.3s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+}
+
+@keyframes blinkerAnim {  
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

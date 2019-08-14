@@ -9,7 +9,7 @@
   	<link rel="stylesheet" href="style/main.css">
   	<link rel="stylesheet" href="style/widgets.css">
   	<link rel="stylesheet" href="style/fontawesome/all.min.css">
-  	<script src="style/jquery-3.4.1.min.js"></script>
+  	<script src="style/js/jquery-3.4.1.min.js"></script>
   	<script src="resources/core.js"></script>
 </head>
 <body>

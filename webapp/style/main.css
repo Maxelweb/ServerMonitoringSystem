@@ -98,12 +98,17 @@ input{
 }
 table{
 	width: 100%;
+	border-collapse: collapse;
 }
 td,th{
 	padding: 3px 5px;
 }
 tr{
 	background-color:  #E9E9E9;
+	border-bottom: 1px solid #CCC;
+}
+tr:last-child{
+	border-bottom: none;
 }
 tr:nth-child(odd){
 	background-color:  #FFF;

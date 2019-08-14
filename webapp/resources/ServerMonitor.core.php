@@ -76,17 +76,30 @@ class HardwareActivity
 
 	function active()
 	{
-		$n = 0;
+		$i = 0;
 		foreach($this->cplat as $n => $v)
-			$n += $v ? 1 : 0 ; 
+			if($v) $i++; 
+		return $i;
 	}
 
 	function printWidget()
 	{
 		if(!empty($this->platforms))
 		{
+			if($this->active() == count($this->cplat))
+				$col = "green";
+			elseif($this->active() == 0)
+				$col = "red";
+			else
+				$col = "orange";
+
+
 			echo '<div class="widget widget-default widget-left">
-					<div class="title"> <i class="fas fa-lg fa-server"></i> Hardware Activity</div>	
+					<div class="title">
+						<i class="fas fa-circle fa-xs icon-blink" style="color: '.$col.'"></i>
+						<i class="fas fa-sm fa-server"></i>
+						<small>Hardware Activity</small>
+					</div>	
 					<div class="content">
 						<div class="responsive">
 							<table>';
@@ -95,7 +108,7 @@ class HardwareActivity
 				foreach ($this->cplat as $key => $value) 
 					echo "<tr>
 							<th>$key</th>
-							<td>".($value ? success("ONLINE",1) : error("OFFLINE",1))."</td>
+							<td>".($value ? success("online",1) : error("offline",1))."</td>
 						  </tr>";
 
 			echo '			</table>
