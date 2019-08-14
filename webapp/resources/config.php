@@ -1,12 +1,4 @@
 <?php
-
-// Configuration File
-
-ini_set('display_errors', 1);
-ini_set("allow_url_fopen", 1);
-error_reporting(E_ALL);
-
-
 // ========================================================
 // Configuration Settings - EDIT FROM HERE
 // ========================================================
@@ -28,6 +20,14 @@ $_platforms = array(				// Check activity of these platforms
 
 define("REPO", "https://github.com/Maxelweb/ServerMonitoringSystem");
 define("VERSION", "0.1");
+define("DEBUG", true);
+
+if(DEBUG)
+{
+	ini_set('display_errors', 1);
+	ini_set("allow_url_fopen", 1);
+	error_reporting(E_ALL);
+}
 
 $s = isset($_GET['s']) ? $_GET['s'] : "";
 $a = isset($_GET['a']) ? $_GET['a'] : 0;

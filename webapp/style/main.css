@@ -20,6 +20,10 @@ h1{
 	font-size: 140%;
 	color:  #4C7D7C;
 }
+h2{
+	font-size: 115%;
+	color: #619f9e;
+}
 header, nav, article, footer{
 	max-width: 1000px;
 	width: auto;

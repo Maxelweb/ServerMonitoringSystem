@@ -47,7 +47,7 @@ class ArduinoConnector
 	{
 		return date('Y-m-g H:i:s', $this->lastPayload);
 	}
-	
+
 }
 
 
@@ -67,11 +67,12 @@ class HardwareActivity
 
 	function checkActivity()
 	{
-		foreach($this->platforms as $name => $ip)
-		{
-			$result = exec("ping -c 1 ".$ip);
-			$this->cplat[$name] = $result!=0;
-		}
+		if(!DEBUG)
+			foreach($this->platforms as $name => $ip)
+			{
+				$result = exec("ping -c 1 ".$ip);
+				$this->cplat[$name] = $result!=0;
+			}
 	}
 
 	function active()
@@ -185,7 +186,6 @@ class Temperature extends Sensor
 	}
 }
 
-
 class Humidity extends Sensor
 {
 	function __construct($jsonValue)
@@ -209,7 +209,6 @@ class Humidity extends Sensor
 	}
 
 }
-
 
 class Door extends Sensor
 {
