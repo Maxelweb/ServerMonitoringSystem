@@ -1,7 +1,7 @@
 <?php 
 
 
-function showWidgets()
+function showSensorsWidgets()
 {
 	// Arduino connection
 	// with handshake - TO DO
@@ -18,6 +18,24 @@ function showWidgets()
 		$sensor->printWidget();
 	}
 
+}
+
+function showHardwareWidget()
+{
+	global $_platforms;
+
+	$h = new HardwareActivity($_platforms);
+	$h->printWidget();
+
+}
+
+function showLogsList()
+{
+	// Arduino connection
+	// with handshake - TO DO
+	// $ard = new ArduinoConnector();
+
+	$jsonTmp = file_get_contents(filename);
 }
 
 function unserializeData($json)

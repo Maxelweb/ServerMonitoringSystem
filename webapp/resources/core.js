@@ -36,8 +36,62 @@ function toggleAutoRefresh() {
         if(timestamp > 0 && timestamp % 10 == 0)
         {
             timestamp = 0;
-            console.log("Data update: ");
+            console.log("Data update");
+            updateSensorsMonitor();
+            updateHardwareMonitor();
         }
+}
+
+function updateSensorsMonitor() {
+    var Err = $("#Errors");
+    $.ajax({
+        url: "refresh.php?s=dashboard-sensors", 
+        error: function () {
+            if(Err.hasClass("hide"))
+                Err.removeClass("hide");
+        },
+        success: function(result) {
+            if(!Err.hasClass("hide")) 
+                Err.addClass("hide");
+            $("#SensorsContainer").html(result);
+        }
+    });
+}
+
+function updateSensorsMonitor() {
+    var Err = $("#ErrorSensors");
+
+    $.ajax({
+        url: "refresh.php?s=dashboard-sensors", 
+        error: function () {
+            if(Err.hasClass("hide"))
+                Err.removeClass("hide");
+        },
+        success: function(result) {
+            if(!Err.hasClass("hide")) 
+                Err.addClass("hide");
+            $("#SensorsContainer").html(result);
+        }
+    });
+}
+
+function updateHardwareMonitor() {
+    var Err = $("#ErrorHardware");
+
+    $.ajax({
+        url: "refresh.php?s=dashboard-hardware", 
+        error: function () 
+        {
+            if(Err.hasClass("hide")) 
+                Err.removeClass("hide");
+        },
+        success: function(result) 
+        {
+            if(!Err.hasClass("hide")) 
+                Err.addClass("hide");
+            $("#HardwareContainer").html(result);
+        }
+    });
 }
 
 

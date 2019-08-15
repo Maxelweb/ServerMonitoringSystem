@@ -124,8 +124,9 @@ tr:nth-child(odd){
 	text-align: center;
 }
 .hide{
-	display: none;
+	display: none !important;
 }
+
 
 /* Imported from CodeBurst.io - Pure CCS3 iOS Switch */
 

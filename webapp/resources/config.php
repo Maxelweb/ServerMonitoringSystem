@@ -31,6 +31,7 @@ if(DEBUG)
 
 $s = isset($_GET['s']) ? $_GET['s'] : "";
 $a = isset($_GET['a']) ? $_GET['a'] : 0;
+$id = isset($_GET['id']) ? $_GET['id'] : 0;
 
 
 // Libs

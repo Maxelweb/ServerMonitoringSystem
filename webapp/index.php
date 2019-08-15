@@ -6,6 +6,11 @@
 
 	switch ($s) 
 	{
+		
+		case 'real-time':
+			require_once 'resources/pages/real-time.php';
+			break;
+		
 		case 'logs':
 			require_once 'resources/pages/logs.php';
 			break;
