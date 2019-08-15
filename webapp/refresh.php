@@ -2,7 +2,11 @@
 
 require_once 'resources/config.php';
 
-if($s == "dashboard")
+if($s == "dashboard-sensors")
+{
+	showWidget();
+}
+elseif($s == "dashboard-hardware")
 {
 	
 }

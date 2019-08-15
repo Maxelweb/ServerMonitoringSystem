@@ -1,4 +1,18 @@
 
+.control-container{
+	width: auto;
+	padding: 10px 5px 20px;
+}
+
+.control-container .apple-switch{
+	margin-bottom: -10px;
+}
+
+.control-container .timeSince{
+	font-size: 90%;
+}
+
+
 .widgets-container{
 	width: auto;
 }

@@ -5,8 +5,8 @@ function showWidgets()
 {
 	// Arduino connection
 	// with handshake - TO DO
-	
 	// $ard = new ArduinoConnector();
+
 
 	// tmp json
 	$jsonTmp = file_get_contents("data.json");
