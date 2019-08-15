@@ -123,6 +123,9 @@ tr:nth-child(odd){
 .tdcenter td{
 	text-align: center;
 }
+.hide{
+	display: none;
+}
 
 /* Imported from CodeBurst.io - Pure CCS3 iOS Switch */
 

@@ -9,7 +9,10 @@
 
 	<div class="control-container">
 		<input type="checkbox" class="apple-switch" id="AutoRefresh" checked value="1"> Auto-refresh &nbsp; 
-		<span class="timeSince"><i class="fas fa-history"></i> <span id="TimeSince">123456</span></span>
+		<span class="timeSince">
+			<i class="fas fa-history"></i>
+			<span id="TimeSince">now</span>
+		</span>
 	</div>
 
 	<div class="widgets-container">
