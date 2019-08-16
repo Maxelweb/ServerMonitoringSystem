@@ -11,7 +11,6 @@
   	<link rel="stylesheet" href="style/fontawesome/all.min.css">
   	<script src="style/js/jquery-3.4.1.min.js"></script>
   	<script src="style/js/Chart.bundle.min.js"></script>
-  	<script src="resources/core.js"></script>
 </head>
 <body>
 
@@ -21,10 +20,10 @@
 </header>
 
 <nav>
-	<span>&#x1F3E0; <a href="?">Dashboard</a></span>
-	<span>&#x1F4B9; <a href="?s=real-time">Real-time Charts</a></span>
+	<a href="?">&#x1F3E0; Dashboard</a>
+	<a href="?s=real-time">&#x1F4B9; Real-time Charts</a>
 	<!--<span>&#x1F5C3; <a href="?s=logs">Logs</a></span>-->
-	<span>&#x2615; <a href="?s=updates">Updates</a></span>
+	<a href="?s=updates">&#x2615; Updates</a>
 </nav>
 
 <article>

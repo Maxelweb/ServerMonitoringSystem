@@ -10,3 +10,11 @@ elseif($s == "dashboard-hardware")
 {
 	showHardwareWidget();
 }
+elseif($s == "realtime")
+{
+
+	// Arduino connection
+
+
+	echo rand(-3,38);
+}

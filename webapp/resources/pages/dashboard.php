@@ -1,8 +1,3 @@
-<?php
-
-
-?>
-
 <section> 
 
 	<h3>&#x1F3E0; Dashboard</h3>
@@ -31,3 +26,5 @@
 	</div>
 
 </section>
+
+<script src="resources/dashboard.js" async></script>

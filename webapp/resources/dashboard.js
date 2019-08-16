@@ -1,4 +1,4 @@
-// Server Monitoring System - Real time update
+// Server Monitoring System - Dashboard
 
 
 /* Globals */
@@ -40,22 +40,6 @@ function toggleAutoRefresh() {
             updateSensorsMonitor();
             updateHardwareMonitor();
         }
-}
-
-function updateSensorsMonitor() {
-    var Err = $("#Errors");
-    $.ajax({
-        url: "refresh.php?s=dashboard-sensors", 
-        error: function () {
-            if(Err.hasClass("hide"))
-                Err.removeClass("hide");
-        },
-        success: function(result) {
-            if(!Err.hasClass("hide")) 
-                Err.addClass("hide");
-            $("#SensorsContainer").html(result);
-        }
-    });
 }
 
 function updateSensorsMonitor() {
