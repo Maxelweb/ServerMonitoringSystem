@@ -36,7 +36,6 @@ function toggleAutoRefresh() {
         if(timestamp > 0 && timestamp % 10 == 0)
         {
             timestamp = 0;
-            console.log("Data update");
             updateSensorsMonitor();
             updateHardwareMonitor();
         }

@@ -223,10 +223,12 @@ $(document).ready(function() {
                     addData(humiChart,ctime,currentData.humidity);
                     itemsHumi++;
 
+                    
+                    refreshes++;
+                    updateAverage();
+
                 }
 
-                refreshes++;
-                updateAverage();
             }
 
     }, 1000);
