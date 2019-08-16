@@ -136,10 +136,11 @@ function updateAverage(){
     var avgT = $("#AvgTemp");
     var avgH = $("#AvgHumi");
 
-    // To fix 
-
-    avgT.text(Math.round(total.temperature/refreshes));
-    avgH.text(Math.round(total.humidity/refreshes));
+    if(refreshes >= 3)
+    {
+        avgT.text((total.temperature/refreshes).toFixed(2));
+        avgH.text((total.humidity/refreshes).toFixed(2));
+    }
 }
 
 /* main body */
