@@ -8,6 +8,7 @@
   	<meta name="author" content="Mariano Sciacco">
   	<link rel="stylesheet" href="style/main.css">
   	<link rel="stylesheet" href="style/widgets.css">
+  	<link rel="stylesheet" href="style/charts.css">
   	<link rel="stylesheet" href="style/fontawesome/all.min.css">
   	<script src="style/js/jquery-3.4.1.min.js"></script>
   	<script src="style/js/Chart.bundle.min.js"></script>

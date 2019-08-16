@@ -14,7 +14,13 @@ elseif($s == "realtime")
 {
 
 	// Arduino connection
+	// ...
+
+	$temp = rand(10, 40);
+	$hum = rand(20, 90);
+
+	$json = json_encode(array("temperature" => $temp, "humidity" => $hum));
+	echo $json;
 
 
-	echo rand(-3,38);
 }
