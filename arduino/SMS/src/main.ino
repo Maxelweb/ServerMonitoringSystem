@@ -1,20 +1,21 @@
+
 #include "SMS_Protocol.h"
 
-using namespace SMS;
 
-SMS_Protocol sms = SMS_Protocol("1AFG34SZ");
+SMS * sms = new SMS();
+SMS_Protocol smsp = SMS_Protocol("1AFG34SZ", sms);
 
 void setup()
 {
-    setInitialPinMode();
+
 }
 
 
 void loop()
 {
-  Alert::Started();
-  Alert::LedWorking();
+  //Alert::Started();
+  //Alert::LedWorking();
 
-  sms.check();
+  //sms.check();
 
 }

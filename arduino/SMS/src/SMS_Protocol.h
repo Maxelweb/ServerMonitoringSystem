@@ -1,7 +1,7 @@
 #ifndef SMS_Protocol_h
 #define SMS_Protocol_h
 
-#include "ServerMonitoringSystem.h"
+#include "SMS.h"
 
 /*
 
@@ -34,11 +34,12 @@ class SMS_Protocol
   private:
     String PrivateApiKey;
     bool Connected;
-    StaticJsonDocument<JSON_OBJECT_SIZE(4)> data;
+    StaticJsonDocument<JSON_OBJECT_SIZE(4)> Data;
     bool request(String) const;
     void serialize();
+    SMS * Parent;
   public:
-    SMS_Protocol(String);
+    SMS_Protocol(String, SMS*);
     void check();
 };
 

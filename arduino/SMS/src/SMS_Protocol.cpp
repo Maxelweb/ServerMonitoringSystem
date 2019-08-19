@@ -1,6 +1,7 @@
 #include "SMS_Protocol.h"
 
-SMS_Protocol::SMS_Protocol(String api)
+
+SMS_Protocol::SMS_Protocol(String api, SMS * s)
 {
   if(api.length() != 8)
     PrivateApiKey = api;
@@ -8,6 +9,8 @@ SMS_Protocol::SMS_Protocol(String api)
     PrivateApiKey = "1234567";
 
     Connected = false;
+    Parent = s;
+
 }
 
 bool SMS_Protocol::request(String compared) const
@@ -48,7 +51,7 @@ void SMS_Protocol::check()
     // Getting JSON DATA
     // Serial.println("JSON_DATA");
     serialize();
-    serializeJson(data, Serial);
+    serializeJson(Data, Serial);
     delay(100);
   }
 
@@ -62,9 +65,9 @@ void SMS_Protocol::check()
 
 void SMS_Protocol::serialize()
 {
-  SMS::updateTH();
-  data["temperature"] = SMS::getTemperature();
-  data["humidity"] = SMS::getHumidity();
-  data["door"] = SMS::isDoorOpen() ? 1 : 0;
-  data["light"] = SMS::isLightUp() ? 1 : 0;
+  Parent->updateTH();
+  Data["temperature"] = Parent->getTemperature();
+  Data["humidity"] = Parent->getHumidity();
+  Data["door"] = Parent->isDoorOpen() ? 1 : 0;
+  Data["light"] = Parent->isLightUp() ? 1 : 0;
 }
