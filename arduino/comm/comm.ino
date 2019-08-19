@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 #include "ArduinoJson.h"
-// #include "ServerMonitoringSystem.h"
+#include "ServerMonitoringSystem.h"
 
 
 int ledPin = 13;
@@ -16,6 +16,8 @@ void setup()
     Serial.begin(9600);
 
     randomSeed(analogRead(0));
+
+    SMS::setInitialPinMode();
 }
 
 
