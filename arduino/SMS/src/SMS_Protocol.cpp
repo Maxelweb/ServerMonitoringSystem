@@ -1,33 +1,21 @@
 #include "SMS_Protocol.h"
 
-SMS_Protocol::SMS_Protocol(char* api)
+SMS_Protocol::SMS_Protocol(String api)
 {
-  if(sizeof(api) == 8)
+  if(api.length() != 8)
     PrivateApiKey = api;
   else
-    PrivateApiKey = "12345678";
+    PrivateApiKey = "1234567";
 
     Connected = false;
 }
 
-bool SMS_Protocol::request(char * compared) const
+bool SMS_Protocol::request(String compared) const
 {
-  char request[8];
-  char curr = -1;
-  byte i = 0;
+  if(Serial.available() > 0)
+    return Serial.readString().equals(compared);
 
-  while(Serial.available() > 0)
-  {
-    if(i < 7)
-    {
-      inChar = Serial.read();
-      request[i] = curr;
-      i++;
-      request[i] = '\0';
-    }
-  }
-
-  return strcmp(request, compared) == 0;
+  return false;
 }
 
 void SMS_Protocol::check()
@@ -40,7 +28,43 @@ void SMS_Protocol::check()
     {
       Serial.println('y');
       delay(50);
-      request(PrivateApiKey);
+
+      if(!request(PrivateApiKey))
+      {
+        Serial.println('x');
+        Serial.println("bye");
+      }
+      else
+      {
+        Serial.println('y');
+        Connected = true;
+        delay(50);
+      }
     }
   }
+
+  if(Connected && request("plz data"))
+  {
+    // Getting JSON DATA
+    // Serial.println("JSON_DATA");
+    serialize();
+    serializeJson(data, Serial);
+    delay(100);
+  }
+
+  if(Connected && request("bye"))
+  {
+    Serial.println("bye");
+    Connected = false;
+  }
+
+}
+
+void SMS_Protocol::serialize()
+{
+  SMS::updateTH();
+  data["temperature"] = SMS::getTemperature();
+  data["humidity"] = SMS::getHumidity();
+  data["door"] = SMS::isDoorOpen() ? 1 : 0;
+  data["light"] = SMS::isLightUp() ? 1 : 0;
 }

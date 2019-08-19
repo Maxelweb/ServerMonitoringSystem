@@ -1,13 +1,17 @@
 #ifndef ServerMonitoringSystem_h
 #define ServerMonitoringSystem_h
 
+#include "Arduino.h"
+#include "ArduinoJson.h"
+#include "dht11.h"
+#include "NewPing.h"
+#include "NewTone.h"
 
 // Using #define instaed of variables to avoid memory allocation
 // --> pre-processor (before compile-time)
 
 // Temperature and Humidity (DHT-11) + Photoresistor
 
-#define MAX_SENSORS 4
 #define LEDPIN 2
 #define BUZZPIN 3
 
@@ -21,7 +25,6 @@
 
 namespace SMS
 {
-
 
 	NewPing DoorSonar(SONARPIN_TRIG, SONARPIN_ECHO, SONAR_MAX_DISTANCE);
 	dht11 THSensor;
@@ -79,9 +82,9 @@ namespace SMS
 			else
 			{
 				digitalWrite(LEDPIN, HIGH);
-				delay(200);
+				delay(50);
 				digitalWrite(LEDPIN, LOW);
-				delay(200);
+				delay(50);
 			}
 		}
 
@@ -89,9 +92,9 @@ namespace SMS
 		{
 			if(!Startup)
 			{
-				tone(BUZZPIN, 1000, 500);
+				NewTone(BUZZPIN, 1000, 500);
 				delay(1500);
-				noTone(BUZZPIN);
+				noNewTone(BUZZPIN);
 				Startup = true;
 			}
 		}

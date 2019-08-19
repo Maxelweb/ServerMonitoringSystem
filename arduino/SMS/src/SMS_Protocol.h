@@ -1,10 +1,12 @@
 #ifndef SMS_Protocol_h
 #define SMS_Protocol_h
 
+#include "ServerMonitoringSystem.h"
+
 /*
- *  SMS Communication Protocol
- *  --------------------------
----------------------
+
+SMS Communication Protocol
+--------------------------
  < Request (Raspberry / PC - Max 8 chars)
  > Response (Arduino)
 ---------------------
@@ -30,15 +32,14 @@ CLOSE
 class SMS_Protocol
 {
   private:
-    char PrivateApiKey[8];
+    String PrivateApiKey;
     bool Connected;
-    StaticJsonDocument<JSON_OBJECT_SIZE(MAX_SENSORS)> data;
-    bool request(char*) const;
+    StaticJsonDocument<JSON_OBJECT_SIZE(4)> data;
+    bool request(String) const;
+    void serialize();
   public:
-    SMS_Protocol(char*);
-    ~SMS_Protocol() = 0;
+    SMS_Protocol(String);
     void check();
-    void serializeAndSend();
-}
+};
 
 #endif

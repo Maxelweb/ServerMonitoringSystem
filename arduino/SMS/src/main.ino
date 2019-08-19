@@ -1,10 +1,8 @@
-#include "Arduino.h"
-#include "ArduinoJson.h"
-#include "NewPing.h"
-#include "dht11.h"
-#include "ServerMonitoringSystem.h"
+#include "SMS_Protocol.h"
 
 using namespace SMS;
+
+SMS_Protocol sms = SMS_Protocol("1AFG34SZ");
 
 void setup()
 {
@@ -16,5 +14,7 @@ void loop()
 {
   Alert::Started();
   Alert::LedWorking();
+
+  sms.check();
 
 }
