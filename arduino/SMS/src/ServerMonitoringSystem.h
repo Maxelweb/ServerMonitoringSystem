@@ -14,7 +14,7 @@
 
 
 
-namespace SMS 
+namespace SMS
 {
 
 	void setInitialPinMode()
@@ -28,11 +28,11 @@ namespace SMS
 		{
 			return;
 		}
-	}	
+	}
 
 	//int getSensorValue(char);
 	// void serializeSensors(); // JSON implementations
-		
+
 }
 
 

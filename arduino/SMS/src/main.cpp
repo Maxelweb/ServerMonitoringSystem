@@ -10,7 +10,7 @@ int ledPin = 13;
 StaticJsonDocument<JSON_OBJECT_SIZE(5)> dataj;
 
 
-void setup() 
+void setup()
 {
     pinMode(ledPin, OUTPUT);
     Serial.begin(9600);
@@ -21,9 +21,9 @@ void setup()
 }
 
 
-void loop() 
+void loop()
 {
- 
+
     dataj["id"] = "current";
     dataj["temperature"] = random(45);
     dataj["humidity"] = random(100);
@@ -32,7 +32,7 @@ void loop()
 
     digitalWrite(ledPin, HIGH);
     delay(1000);
-  
+
     /*for(byte n = 0; n < 150; n++)
     {
         Serial.write(n);
