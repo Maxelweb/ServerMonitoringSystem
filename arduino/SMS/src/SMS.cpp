@@ -1,12 +1,9 @@
 #include "SMS.h"
 
 SMS::SMS()
-{
-	DoorSonar = NewPing(SONARPIN_TRIG, SONARPIN_ECHO, SMAX_DISTANCE);
-	THSensor = dht11();
-	Working = true;
-	Started = false;
-}
+: DoorSonar(new NewPing(SONARPIN_TRIG, SONARPIN_ECHO, SMAX_DISTANCE)),
+THSensor(new dht11()), Working(true), Startup(false)
+{ }
 
 void SMS::setInitialPinMode()
 {
@@ -22,23 +19,23 @@ void SMS::setInitialPinMode()
 
 bool SMS::isDoorOpen()
 {
-	return DoorSonar.ping_cm() == 0;
+	return DoorSonar->ping_cm() == 0;
 }
 
 void SMS::updateTH()
 {
-	if(THSensor.read(THPIN) != 0)
+	if(THSensor->read(THPIN) != 0)
 		Working = false;
 }
 
-int SMS::getTemperature()
+int SMS::getTemperature() const
 {
-	return THSensor.temperature;
+	return THSensor->temperature;
 }
 
-int SMS::getHumidity()
+int SMS::getHumidity() const
 {
-	return THSensor.humidity;
+	return THSensor->humidity;
 }
 
 bool SMS::isLightUp()
