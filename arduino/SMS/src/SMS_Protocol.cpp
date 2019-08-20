@@ -13,26 +13,28 @@ SMS_Protocol::SMS_Protocol(String api, SMS * s)
 
 }
 
-bool SMS_Protocol::request(String compared) const
+String SMS_Protocol::request() const
 {
   if(Serial.available() > 0)
-    return Serial.readString().equals(compared);
+    return Serial.readString();
 
-  return false;
+  return "";
 }
 
 void SMS_Protocol::check()
 {
-  if(request("plz"))
+  String req = request();
+
+  if(req == "plz")
   {
     if(Connected)
       Serial.println('x');
     else
     {
       Serial.println('y');
-      delay(50);
+      delay(5000);
 
-      if(!request(PrivateApiKey))
+      if(request() != PrivateApiKey)
       {
         Serial.println('x');
         Serial.println("bye");
@@ -46,16 +48,14 @@ void SMS_Protocol::check()
     }
   }
 
-  if(Connected && request("plz data"))
+  if(Connected && req == "plz data")
   {
-    // Getting JSON DATA
-    // Serial.println("JSON_DATA");
     serialize();
     serializeJson(Data, Serial);
     delay(100);
   }
 
-  if(Connected && request("bye"))
+  if(Connected && req == "bye")
   {
     Serial.println("bye");
     Connected = false;

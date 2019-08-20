@@ -3,6 +3,20 @@
 
 #include "SMS.h"
 
+class SMS_Protocol
+{
+  private:
+    String PrivateApiKey;
+    bool Connected;
+    StaticJsonDocument<JSON_OBJECT_SIZE(4)> Data;
+    String request() const;
+    void serialize();
+    SMS * Parent;
+  public:
+    SMS_Protocol(String, SMS*);
+    void check();
+};
+
 /*
 
 SMS Communication Protocol
@@ -28,19 +42,5 @@ CLOSE
 ---------------------
  */
 
-
-class SMS_Protocol
-{
-  private:
-    String PrivateApiKey;
-    bool Connected;
-    StaticJsonDocument<JSON_OBJECT_SIZE(4)> Data;
-    bool request(String) const;
-    void serialize();
-    SMS * Parent;
-  public:
-    SMS_Protocol(String, SMS*);
-    void check();
-};
 
 #endif
