@@ -1,0 +1,42 @@
+
+# Travis CI configuration file 
+# for Arduino: ServerMonitoringSystem
+# Based on https://learn.adafruit.com/the-well-automated-arduino-library/travis-ci
+
+
+language: c
+sudo: false
+cache:
+  directories:
+    - ~/arduino_ide
+    - ~/.arduino15/packages/
+
+git:
+  depth: false
+  quiet: true
+
+
+# env:
+  # global:
+     # You can uncomment this to explicitly choose an (old) version of the Arduino IDE
+     #- ARDUINO_IDE_VERSION="1.8.7"
+
+before_install:
+  - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
+
+install:
+  # Note that every library should be installed in a seperate command
+  # - arduino --install-library "Arduino"
+  - arduino --install-library "ArduinoJson"
+  - arduino --install-library "NewPing"
+  - arduino --install-library "NewTone"
+  - arduino --install-library "dht11"
+
+script:
+  # - build_main_platforms
+  - build_platform uno 
+  - build_platform esp8266
+  - build_platform esp32
+
+notifications:
+  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
