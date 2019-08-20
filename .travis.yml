@@ -25,7 +25,7 @@ before_install:
 
 install:
   # Note that every library should be installed in a seperate command
-  - arduino --install-library "Arduino"
+  # - arduino --install-library "Arduino"
   - arduino --install-library "ArduinoJson"
   - arduino --install-library "NewPing"
   - arduino --install-library "NewTone"
