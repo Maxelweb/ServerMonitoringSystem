@@ -3,10 +3,10 @@
 
 SMS_Protocol::SMS_Protocol(String api, SMS * s)
 {
-  if(api.length() != 8)
+  if(api.length() == 8)
     PrivateApiKey = api;
   else
-    PrivateApiKey = "1234567";
+    PrivateApiKey = "1";
 
     Connected = false;
     Parent = s;
