@@ -9,12 +9,10 @@ cache:
     directories:
         - "~/.platformio"
 
-env:
-    - PLATFORMIO_CI_SRC=arduino/SMS
-
 install:
     - pip install -U platformio
     - platformio update
 
 script:
+    - cd arduino/SMS
     - platformio run
