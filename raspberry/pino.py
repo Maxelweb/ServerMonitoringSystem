@@ -3,6 +3,11 @@
 # Libs
 
 import serial
+import time
+
+from time import sleep
+
+start = time.time()
 
 
 # Config
@@ -24,12 +29,30 @@ class col:
     UNDERLINE = '\033[4m'
 
 
+# To do: try catch for multiple usb ports
+
 class SMS_Protocol :
 
 	def __init__(self, privateApiKey):
 		self.privateApiKey = privateApiKey
-		self.usb = serial.Serial("/dev/ttyUSB1", 9600, timeout = 2)
+		self.usb = serial.Serial("/dev/ttyACM1", 9600, 
+			bytesize=serial.EIGHTBITS,
+	        parity=serial.PARITY_NONE,
+	        stopbits=serial.STOPBITS_ONE,
+	        timeout=1,
+	        xonxoff=0,
+	        rtscts=0
+	    )
+		#self.usb.flushInput()
+		
+		# Toggle DTR to reset Arduino
+		self.usb.setDTR(False)
+		sleep(3)
+		# toss any data already received, see
+		# http://pyserial.sourceforge.net/pyserial_api.html#serial.Serial.flushInput
 		self.usb.flushInput()
+		self.usb.setDTR(True)
+
 		self.connected = False
 		self.lastData = "none"
 		self.c = col()
@@ -103,11 +126,11 @@ class SMS_Protocol :
 
 monitor = SMS_Protocol("1")
 
-monitor.startConnection()
+if monitor.startConnection() == True :
 
-while True :
-	if monitor.connected == True :
-	# while True :
-		monitor.requireData()
-		monitor.getData()
-monitor.closeConnection()
+	monitor.requireData()
+	monitor.getData()
+	monitor.closeConnection()
+
+end = time.time()
+print(end - start)

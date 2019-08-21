@@ -35,18 +35,18 @@ void SMS_Protocol::check()
     else
     {
       Serial.println('y');
-      delay(10);
+      delay(100);
 
       if(request() != PrivateApiKey)
       {
         Serial.println('x');
         Serial.println("bye");
+        delay(100);
       }
       else
       {
         Serial.println('y');
         Connected = true;
-        delay(10);
       }
     }
   }
@@ -55,7 +55,7 @@ void SMS_Protocol::check()
   {
     serialize();
     serializeJson(Data, Serial);
-    delay(10);
+    delay(100);
   }
 
   if(Connected && req == "bye")
