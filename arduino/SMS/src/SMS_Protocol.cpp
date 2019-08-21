@@ -25,6 +25,9 @@ void SMS_Protocol::check()
 {
   String req = request();
 
+  //Serial.println("Ready..");
+  // delay(2000);
+
   if(req == "plz")
   {
     if(Connected)
@@ -32,7 +35,7 @@ void SMS_Protocol::check()
     else
     {
       Serial.println('y');
-      delay(5000);
+      delay(10);
 
       if(request() != PrivateApiKey)
       {
@@ -43,7 +46,7 @@ void SMS_Protocol::check()
       {
         Serial.println('y');
         Connected = true;
-        delay(50);
+        delay(10);
       }
     }
   }
@@ -52,7 +55,7 @@ void SMS_Protocol::check()
   {
     serialize();
     serializeJson(Data, Serial);
-    delay(100);
+    delay(10);
   }
 
   if(Connected && req == "bye")

@@ -6,3 +6,4 @@ arduino/SMS/.vscode/c_cpp_properties.json
 arduino/SMS/.vscode/extensions.json
 arduino/SMS/.vscode/launch.json
 arduino/SMS/.vscode/settings.json
+*.code-workspace
