@@ -6,7 +6,7 @@
 //  - Deep copy (not necessary)
 
 SMS * sms = new SMS();
-SMS_Protocol * smsp = new SMS_Protocol("SECRET12_FAIL", sms);
+SMS_Protocol * smsp = new SMS_Protocol("SECRET", sms);
 
 void setup()
 {

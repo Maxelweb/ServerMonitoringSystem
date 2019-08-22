@@ -9,7 +9,7 @@ void SMS::setInitialPinMode()
 {
 	Serial.begin(9600);
 
-	Serial.setTimeout(400);
+	Serial.setTimeout(750);
 
 	pinMode(LEDPIN, OUTPUT);
 	pinMode(BUZZPIN, OUTPUT);

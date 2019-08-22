@@ -2,7 +2,7 @@
 #define ServerMonitoringSystem_h
 
 #include "Arduino.h"
-#include "ArduinoJson.h"
+// #include "ArduinoJson.h"
 #include "NewPing.h"
 #include "NewTone.h"
 #include "dht11.h"

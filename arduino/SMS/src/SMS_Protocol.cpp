@@ -3,14 +3,10 @@
 
 SMS_Protocol::SMS_Protocol(String api, SMS * s)
 {
-  if(api.length() == 8)
     PrivateApiKey = api;
-  else
-    PrivateApiKey = "1";
 
     Connected = false;
     Parent = s;
-
 }
 
 String SMS_Protocol::request() const
@@ -54,7 +50,7 @@ void SMS_Protocol::check()
   if(Connected && req == "plz data")
   {
     serialize();
-    serializeJson(Data, Serial);
+    // serializeJson(Data, Serial);
     delay(100);
   }
 
@@ -69,8 +65,16 @@ void SMS_Protocol::check()
 void SMS_Protocol::serialize()
 {
   Parent->updateTH();
-  Data["temperature"] = Parent->getTemperature();
+ /* Data["temperature"] = Parent->getTemperature();
   Data["humidity"] = Parent->getHumidity();
   Data["door"] = Parent->isDoorOpen() ? 1 : 0;
   Data["light"] = Parent->isLightUp() ? 1 : 0;
+  */
+  Serial.print(Parent->getTemperature());
+  Serial.print(",");
+  Serial.print(Parent->getHumidity());
+  Serial.print(",");
+  Serial.print(Parent->isDoorOpen());
+  Serial.print(",");
+  Serial.println(Parent->isLightUp());
 }
