@@ -12,8 +12,6 @@ $_platforms = array(				// Check activity of these platforms
 );
 
 
-
-
 // DO NOT CHANGE UNDER THIS LINE
 // ========================================================
 

@@ -11,13 +11,10 @@ SECRET_CODE = "SECRET"
 
 import zmq 
 import time
+import sys
 from time import sleep
 from classes.sms_protocol import SMS_Protocol
 from classes.terminal_echo import echo
-
-# Debugging
-start = time.time()
-
 
 # kill process -9 pkill 
 # find /sys/bus/usb/devices/usb*/ -name dev
@@ -26,60 +23,37 @@ start = time.time()
 
 # Main
 
-def main() :
+echo(0, "Server starting...")
 
-	echo(0, "Server starting...")
+context = zmq.Context()
+socket = context.socket(zmq.PUB)
+socket.bind("tcp://*:2500")
 
-	context = zmq.Context()
-	socket = context.socket(zmq.REP)
-	socket.bind("tcp://*:2500")
+echo(1, "Server started on localhost:2500")
+echo(0, "Enstablishing connection with arduino on Serial port..")
 
-	echo(1, "Server started on localhost:2500")
-	echo(0, "Enstablishing connection with arduino on Serial port..")
+monitor = SMS_Protocol(SECRET_CODE)
 
-	monitor = SMS_Protocol(SECRET_CODE)
+i = 1
+echo(0, "Attempt #"+str(i)+" ...")
 
-	i = 1
-
+while i < 6 and monitor.startConnection() == False :
+	sleep(0.2)
+	i = i+1
 	echo(0, "Attempt #"+str(i)+" ...")
 
-	while i < 6 and monitor.startConnection() == False :
-		sleep(0.2)
-		i = i+1
-		echo(0, "Attempt #"+str(i)+" ...")
-
-	if monitor.connected == False :
-		echo(0, "Closing..")
-		return 
-
-	lastRequest = time.time()
-
-	while monitor.connected == True : 
-	    
-	    msg = socket.recv_string()
-
-	    if msg == "get_data" :
-	    	lastRequest = time.time() - lastRequest
-	    	monitor.requireData()
-	    	socket.send_string(monitor.lastData)
-	    
-	    elif msg == "ping" :
-	    	socket.send_string("ok")
-
-	    elif msg == "close" :
-	    	if monitor.closeConnection() == True :
-	    		echo(0, "Preparing to shutdown server..")
-	    else : 
-	    	socket.send_string("idk")
+if monitor.connected == False :
+	echo(0, "Closing..")
+	sys.exit()
 
 
-	echo(1, "Closing..")
-	
-	# Debugging 
-	echo(0, "Total runtime: " + str(time.time() - start))
-	
-	return 
+while monitor.connected == True : 
+    
+    monitor.requireData()
+    socket.send_string("%d %s" % (100, monitor.lastData))
+    sleep(5)
 
 
-if __name__ == "__main__" :
-	main()
+echo(1, "Closing..")
+
+sys.exit()

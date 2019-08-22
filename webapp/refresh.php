@@ -13,12 +13,11 @@ elseif($s == "dashboard-hardware")
 elseif($s == "realtime")
 {
 
+	header("Content-type: application/json");
 	// Arduino connection
 	// ...
 
 	$data = arduino_requestData();
-
-	header("Content-type:application/json");
 	echo json_encode($data);
 
 	/*$temp = rand(10, 40);

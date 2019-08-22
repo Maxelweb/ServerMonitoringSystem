@@ -104,6 +104,8 @@ function updateData() {
 
     $.ajax({
         url: "refresh.php?s=realtime", 
+        dataType: "json",
+        timeout: 10000,
         error: function () {
             if(Err.hasClass("hide"))
                 Err.removeClass("hide");
@@ -231,7 +233,7 @@ $(document).ready(function() {
 
             }
 
-    }, 10000);
+    }, 3000);
 
 });
 
