@@ -14,7 +14,7 @@
 	<ul>
 		<li><strong>Current version:</strong> <?=$hup->currentVersion();?></li>
 		<li><strong>Latest version:</strong> <?=$hup->latestVersion();?></li>
-		<li><strong>Github repository for updates:</strong> <a href="<?=REPO;?>"><?=REPO;?></a></li>
+		<li><strong>Github repository for updates:</strong> <a href="<?=REPO;?>">click here</a></li>
 	</ul>
 
 	<?php

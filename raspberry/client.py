@@ -1,26 +1,30 @@
 #!/user/bin/env python3
 
 import zmq
-from classes.terminal_echo import echo
-import time
+import sys
 
-start = time.time()
+cmds = ("get_data", "ping", "close")
 
-echo(0, "Connecting to server...")
-context = zmq.Context()
-socket = context.socket(zmq.REQ)
-socket.connect("tcp://localhost:2500")
+def main() :
 
-echo(1, "Connected to localhost:2500")
+	if sys.argv[1] not in cmds :
+		print(0)
+		return
+	
+	context = zmq.Context()
+	socket = context.socket(zmq.REQ)
+	socket.connect("tcp://localhost:2500")
 
-echo(0, "Requesting data..")
-socket.send_string("get_data")
+	socket.send_string(sys.argv[1])
 
-mex = socket.recv_string()
+	mex = socket.recv_string()
 
-print(mex)
+	if mex != "idk" :
+		print(mex) 
+	else : 
+		print(0)
 
+	return
 
-echo(1, str(time.time() - start))
-
-echo(1,"Closing..")
+if __name__ == "__main__" :
+	main()

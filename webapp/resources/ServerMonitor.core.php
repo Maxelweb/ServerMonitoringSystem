@@ -1,53 +1,22 @@
 <?php 
 
-class ArduinoConnector
+function arduino_requestData()
 {
-	private $error;
-	private $payload;
-	private $lastPayload;
-	
-	function __construct()
-	{
-		$this->arduinoHandshake();
-	}
+    $shellCommand = escapeshellcmd('python3 ' . SCRIPT_PATH . ' get_data');
+    $shellOutput = trim(shell_exec($shellCommand));
+ 	
+ 	//var_dump($shellOutput);
 
-	private function updatePayload($pay)
-	{
-		if($this->payload != $pay)
-		{
-			$this->payload = $pay;
-			$this->lastPayload = time();
-			$this->error = 0;
-		}
-	}
-
-	private function arduinoHandshake()
-	{
-     
-	    $shellCommand = escapeshellcmd(SCRIPT_PATH . ' ' . API_ARDUINO);
-	    $shellOutput = shell_exec($shellCommand);
-     
-     	if($shellOutput == 0)
-     		$this->error = 1;
-     	else
-     		$this->updatePayload($shellOutput);
-	}
-
-	public function error()
-	{
-		return $this->error;
-	}
-
-	public function getPayload()
-	{
-		return $this->payload;
-	}
-
-	public function getLastPayloadTime()
-	{
-		return date('Y-m-g H:i:s', $this->lastPayload);
-	}
-
+ 	if($shellOutput == "0")
+ 		$this->error = 1;
+ 	else
+ 	{
+ 		$it = explode(",", $shellOutput);
+ 		$kit = array("temperature", "humidity", "door", "light");
+ 		$data = array_combine($kit, $it);
+ 		// var_dump($data);
+ 		return $data;
+ 	}
 }
 
 
@@ -67,7 +36,7 @@ class HardwareActivity
 
 	function checkActivity()
 	{
-		if(!DEBUG)
+		//if(!DEBUG)
 			foreach($this->platforms as $name => $ip)
 			{
 				$result = exec("ping -c 1 ".$ip);

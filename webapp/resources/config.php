@@ -4,12 +4,11 @@
 // ========================================================
 
 define("NAME", "myserver"); // Server location or name
-define("API_ARDUINO", "12345"); // API secret code to interact with arduino
-define("SCRIPT_PATH", "/home/myusername/script.py"); // Python script location 
+define("SCRIPT_PATH", "/home/maxel/sms/client.py"); // Python script location 
 
 $_platforms = array(				// Check activity of these platforms
-	"Website" => "127.0.0.1",
-	"Server" => "192.168.1.2"
+	"Raspberry" => "192.168.1.250",
+	"Internet" => "192.168.1.1"
 );
 
 

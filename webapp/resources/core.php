@@ -1,17 +1,18 @@
 <?php 
 
-
 function showSensorsWidgets()
 {
 	// Arduino connection
 	// with handshake - TO DO
 	// $ard = new ArduinoConnector();
 
-
 	// tmp json
-	$jsonTmp = file_get_contents("data.json");
-	
-	$sensors = unserializeData($jsonTmp);
+	/*$jsonTmp = file_get_contents("data.json");
+	*/
+
+	$json = arduino_requestData();
+	// var_dump($json);
+	$sensors = unserializeData($json);
 
 	foreach($sensors as $sensor)
 	{
@@ -35,12 +36,11 @@ function showLogsList()
 	// with handshake - TO DO
 	// $ard = new ArduinoConnector();
 
-	$jsonTmp = file_get_contents(filename);
+	// $jsonTmp = file_get_contents(filename);
 }
 
-function unserializeData($json)
+function unserializeData($items)
 {
-	$items = json_decode($json);
 	$sensors = array();
 
 	foreach ($items as $key => $value) 
