@@ -21,9 +21,6 @@ void SMS_Protocol::check()
 {
   String req = request();
 
-  //Serial.println("Ready..");
-  // delay(2000);
-
   if(req == "plz")
   {
     if(Connected)
@@ -46,30 +43,20 @@ void SMS_Protocol::check()
       }
     }
   }
-
-  if(Connected && req == "plz data")
-  {
-    serialize();
-    // serializeJson(Data, Serial);
-    delay(100);
-  }
-
-  if(Connected && req == "bye")
+  else if(Connected && req == "bye")
   {
     Serial.println("bye");
     Connected = false;
   }
-
+  else if(Connected && req == "plz data")
+  {  
+    Parent->updateTH();
+    serialize();
+  }
 }
 
 void SMS_Protocol::serialize()
 {
-  Parent->updateTH();
- /* Data["temperature"] = Parent->getTemperature();
-  Data["humidity"] = Parent->getHumidity();
-  Data["door"] = Parent->isDoorOpen() ? 1 : 0;
-  Data["light"] = Parent->isLightUp() ? 1 : 0;
-  */
   Serial.print(Parent->getTemperature());
   Serial.print(",");
   Serial.print(Parent->getHumidity());
@@ -77,4 +64,9 @@ void SMS_Protocol::serialize()
   Serial.print(Parent->isDoorOpen());
   Serial.print(",");
   Serial.println(Parent->isLightUp());
+}
+
+bool SMS_Protocol::isConnected() const
+{
+  return Connected;
 }

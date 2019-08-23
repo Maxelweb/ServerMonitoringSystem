@@ -32,7 +32,7 @@ socket.bind("tcp://*:2500")
 echo(1, "Server started on localhost:2500")
 echo(0, "Enstablishing connection with arduino on Serial port..")
 
-monitor = SMS_Protocol(SECRET_CODE)
+monitor = SMS_Protocol(SECRET_CODE, "/dev/ttyUSB0")
 
 i = 1
 echo(0, "Attempt #"+str(i)+" ...")
@@ -45,7 +45,6 @@ while i < 6 and monitor.startConnection() == False :
 if monitor.connected == False :
 	echo(0, "Closing..")
 	sys.exit()
-
 
 while monitor.connected == True : 
     

@@ -12,9 +12,9 @@ from .terminal_echo import echo
 
 class SMS_Protocol :
 
-	def __init__(self, privateApiKey):
+	def __init__(self, privateApiKey, portpath):
 		self.privateApiKey = privateApiKey
-		self.usb = serial.Serial("/dev/ttyUSB0", 9600, timeout = 2)
+		self.usb = serial.Serial(portpath, 9600, timeout = 2)
 		self.usb.flushInput()
 		self.connected = False
 		self.lastData = "none"

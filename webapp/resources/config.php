@@ -3,7 +3,7 @@
 // Configuration Settings - EDIT FROM HERE
 // ========================================================
 
-define("NAME", "myserver"); // Server location or name
+define("NAME", "Home"); // Server location or name
 define("SCRIPT_PATH", "/home/maxel/sms/client.py"); // Python script location 
 
 $_platforms = array(				// Check activity of these platforms

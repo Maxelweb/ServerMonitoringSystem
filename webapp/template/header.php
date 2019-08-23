@@ -22,7 +22,7 @@
 
 <nav>
 	<a href="?">&#x1F3E0; Dashboard</a>
-	<a href="?s=real-time">&#x1F4B9; Real-time Charts</a>
+	<!--<a href="?s=real-time">&#x1F4B9; Real-time Charts</a>-->
 	<!--<span>&#x1F5C3; <a href="?s=logs">Logs</a></span>-->
 	<a href="?s=updates">&#x2615; Updates</a>
 </nav>

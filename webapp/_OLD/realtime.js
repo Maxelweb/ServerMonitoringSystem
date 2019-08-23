@@ -1,6 +1,12 @@
 // Server Monitoring System - Realtime graph
 
 
+var sub = new JSMQ.Subscriber();
+
+sub.connect('ws://127.0.0.1:2500');
+sub.subscribe('100');
+
+
 /* Globals */
 
 var refreshes = 0;
@@ -10,6 +16,8 @@ const maxData = 10;
 var currentTime = Date.now();
 var currentData = [];
 var total = [];
+total["temperature"] = "";
+total["humidity"] = "";
 
 
 /* Chart options */
@@ -99,6 +107,8 @@ function removeData(chart) {
 }
 
 
+
+/*
 function updateData() {
     var Err = $("#Error");
 
@@ -126,6 +136,19 @@ function updateData() {
         }
     });
 }
+*/
+
+function updateData() {
+    var Err = $("#Error");
+
+    sub.onMessage(function(message) {
+        message.popString();
+      console.log('received a message containing', message.popString());
+      //total.temperature += message.temperature;
+      //total.humidity += message.humidity;
+    });
+}
+
 
 function addZero(i) {
   if (i < 10) 
@@ -233,7 +256,7 @@ $(document).ready(function() {
 
             }
 
-    }, 3000);
+    }, 2000);
 
 });
 

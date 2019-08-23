@@ -1,23 +1,31 @@
 <?php 
 
+function arduino_requestData()
+{
+    $shellCommand = escapeshellcmd('python3 ' . SCRIPT_PATH);
+    $shellOutput = trim(shell_exec($shellCommand));
+
+ 	if($shellOutput == "0")
+ 		$this->error = 1;
+ 	else
+ 	{
+ 		$it = explode(",", $shellOutput);
+ 		$kit = array("temperature", "humidity", "door", "light");
+ 		$data = array_combine($kit, $it);
+ 		return $data;
+ 	}
+}
+
+
 function showSensorsWidgets()
 {
-	// Arduino connection
-	// with handshake - TO DO
-	// $ard = new ArduinoConnector();
+	$sensors = unserializeData(arduino_requestData());
 
-	// tmp json
-	/*$jsonTmp = file_get_contents("data.json");
-	*/
-
-	$json = arduino_requestData();
-	// var_dump($json);
-	$sensors = unserializeData($json);
-
-	foreach($sensors as $sensor)
-	{
-		$sensor->printWidget();
-	}
+	if(!empty($sensors))
+		foreach($sensors as $sensor)
+		{
+			$sensor->printWidget();
+		}
 
 }
 
@@ -28,15 +36,6 @@ function showHardwareWidget()
 	$h = new HardwareActivity($_platforms);
 	$h->printWidget();
 
-}
-
-function showLogsList()
-{
-	// Arduino connection
-	// with handshake - TO DO
-	// $ard = new ArduinoConnector();
-
-	// $jsonTmp = file_get_contents(filename);
 }
 
 function unserializeData($items)

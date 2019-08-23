@@ -8,8 +8,7 @@ THSensor(new dht11()), Working(true), Startup(false)
 void SMS::setInitialPinMode()
 {
 	Serial.begin(9600);
-
-	Serial.setTimeout(750);
+	Serial.setTimeout(600);
 
 	pinMode(LEDPIN, OUTPUT);
 	pinMode(BUZZPIN, OUTPUT);

@@ -1,25 +1,5 @@
 <?php 
 
-function arduino_requestData()
-{
-    $shellCommand = escapeshellcmd('python3 ' . SCRIPT_PATH . ' get_data');
-    $shellOutput = trim(shell_exec($shellCommand));
- 	
- 	//var_dump($shellOutput);
-
- 	if($shellOutput == "0")
- 		$this->error = 1;
- 	else
- 	{
- 		$it = explode(",", $shellOutput);
- 		$kit = array("temperature", "humidity", "door", "light");
- 		$data = array_combine($kit, $it);
- 		// var_dump($data);
- 		return $data;
- 	}
-}
-
-
 class HardwareActivity
 {
 	private $platforms;
@@ -36,12 +16,11 @@ class HardwareActivity
 
 	function checkActivity()
 	{
-		//if(!DEBUG)
-			foreach($this->platforms as $name => $ip)
-			{
-				$result = exec("ping -c 1 ".$ip);
-				$this->cplat[$name] = $result!=0;
-			}
+		foreach($this->platforms as $name => $ip)
+		{
+			$result = exec("ping -c 1 ".$ip);
+			$this->cplat[$name] = $result!=0;
+		}
 	}
 
 	function active()
