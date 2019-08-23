@@ -15,7 +15,7 @@
 
 #define SONARPIN_ECHO 7
 #define SONARPIN_TRIG 8
-#define SMAX_DISTANCE 200
+#define SMAX_DISTANCE 320
 
 class SMS
 {

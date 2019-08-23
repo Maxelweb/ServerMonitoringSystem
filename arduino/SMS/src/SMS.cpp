@@ -41,19 +41,16 @@ int SMS::getHumidity() const
 
 bool SMS::isLightUp()
 {
-	return analogRead(LIGHTPIN) > 60;
+	return analogRead(LIGHTPIN) < 160;
 }
 
 void SMS::LedWorking()
 {
 	if(Working)
-		digitalWrite(LEDPIN, HIGH);
+		digitalWrite(LEDPIN, LOW);
 	else
 	{
 		digitalWrite(LEDPIN, HIGH);
-		delay(50);
-		digitalWrite(LEDPIN, LOW);
-		delay(50);
 	}
 }
 
@@ -62,7 +59,7 @@ void SMS::Started()
 	if(!Startup)
 	{
 		NewTone(BUZZPIN, 1000, 500);
-		delay(1500);
+		delay(500);
 		noNewTone(BUZZPIN);
 		Startup = true;
 	}
