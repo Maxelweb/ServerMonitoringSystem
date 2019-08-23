@@ -18,8 +18,8 @@ class HardwareActivity
 	{
 		foreach($this->platforms as $name => $ip)
 		{
-			$result = exec("ping -c 1 ".$ip);
-			$this->cplat[$name] = $result!=0;
+			exec("ping -c 1 ".$ip, $output, $result);
+			$this->cplat[$name] = $result==0;
 		}
 	}
 

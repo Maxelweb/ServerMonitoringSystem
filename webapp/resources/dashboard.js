@@ -33,7 +33,7 @@ function toggleAutoRefresh() {
     var checkbox = $("#AutoRefresh");
     
     if(checkbox.prop('checked'))
-        if(timestamp > 0 && timestamp % 10 == 0)
+        if(timestamp >= 0 && timestamp % 10 == 0)
         {
             timestamp = 0;
             updateSensorsMonitor();
@@ -79,6 +79,8 @@ function updateHardwareMonitor() {
 
 
 $(document).ready(function() {
+
+    toggleAutoRefresh();
 
     var timehtml = $("#TimeSince");
 

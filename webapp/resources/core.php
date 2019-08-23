@@ -5,8 +5,8 @@ function arduino_requestData()
     $shellCommand = escapeshellcmd('python3 ' . SCRIPT_PATH);
     $shellOutput = trim(shell_exec($shellCommand));
 
- 	if($shellOutput == "0")
- 		$this->error = 1;
+ 	if(strlen($shellOutput) > 20)
+ 		return array();
  	else
  	{
  		$it = explode(",", $shellOutput);
