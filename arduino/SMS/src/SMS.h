@@ -2,40 +2,46 @@
 #define ServerMonitoringSystem_h
 
 #include "Arduino.h"
-// #include "ArduinoJson.h"
-#include "NewPing.h"
+#include "HCSR04.h"
 #include "NewTone.h"
 #include "dht11.h"
 
 #define LEDPIN 2
 #define BUZZPIN 3
+#define LEDCONN 5
 
 #define THPIN 4
 #define LIGHTPIN A0
 
 #define SONARPIN_ECHO 7
 #define SONARPIN_TRIG 8
-#define SMAX_DISTANCE 320
+#define SMAX_DISTANCE 4000
+#define SMIN_DISTANCE 20
 
 class SMS
 {
-  protected:
-    NewPing * DoorSonar;
+private:
+    UltraSonicDistanceSensor * DoorSonar;
     dht11 * THSensor;
     bool Working;
     bool Startup;
+    double DoorDistance;
+    int LightPower;
 
-  public:
+public:
+    bool EnableAlarm;
     SMS();
     void setInitialPinMode();
     bool isDoorOpen();
     bool isLightUp();
     int getTemperature() const;
     int getHumidity() const;
-    void updateTH();
+    void updateSensors();
 
-    void LedWorking();
     void Started();
+    void Alarms();
+    void LedWorking();
+    void LedConnected(bool);
 };
 
 #endif
