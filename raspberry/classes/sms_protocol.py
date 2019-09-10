@@ -76,5 +76,15 @@ class SMS_Protocol :
 			self.lastData = self.response()
 			return True
 
+	def setAlarm(self, mode) :
+		if mode == 1 : 
+			self.send("plz alarm on")
+		else :
+			self.send("plz alarm off")
+
+	def getAlarmStatus(self) :
+		self.send("plz alarm")
+		return self.response()
+
 
 

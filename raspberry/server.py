@@ -26,11 +26,12 @@ sys.stdout = open('sms-logs.txt', 'w')
 
 echo(0, "Server starting...")
 
-context = zmq.Context()
-socket = context.socket(zmq.PUB)
 
 try:
+	context = zmq.Context()
+	socket = context.socket(zmq.REP)
 	socket.bind("tcp://*:2500")
+	socket.setsockopt(zmq.RCVTIMEO, 2000) # timeout 2 seconds
 
 	echo(1, "Server started on localhost:2500")
 	echo(0, "Enstablishing connection with arduino on Serial port..")
@@ -46,26 +47,46 @@ try:
 		echo(0, "Attempt #"+str(i)+" ...")
 
 	if monitor.connected == False :
-		echo(0, "Closing..")
-		sys.exit()
-
-	update = 0
+		echo(0, "Unable to connect to Arduino..")
 
 	while monitor.connected == True : 
 	    
-	    if update >= 10 : 
-	    	monitor.requireData()
-	    	update = 0
-	    else : 
-	    	update = update + 0.5
+	    # Data update
+	    monitor.requireData()
 
-	    socket.send_string("%d %s" % (100, monitor.lastData))
-	    sleep(0.4)
+	    # Message handler
+	    try :
+	    	msg = socket.recv_string()
+	    except Exception as err :
+	    	continue; 
+
+
+	    if msg == "get_data" :
+	    	socket.send_string(monitor.lastData)
+
+	    elif msg == "ping" :
+	    	socket.send_string("pong")
+
+	    elif msg == "alarm_on" :
+	    	monitor.setAlarm(1)
+
+	    elif msg == "alarm_off" :
+	    	monitor.setAlarm(0)
+
+	    elif msg == "alarm" : 
+	    	socket.send_string(monitor.getAlarmStatus())
+
+	    elif msg == "close" :
+	    	if monitor.closeConnection() == True :
+	    		echo(0, "Preparing to shutdown server..")
+	    else : 
+	    	socket.send_string("idk")
 
 except Exception as e:
 	echo(-1, "Unable to start server due to exception: " + str(e))
+
 finally:
 	echo(0, "Closing..")
-	socket.close()
-	context.term()
-	raise SystemExit
+	#socket.close()
+	#context.term()
+	#raise SystemExit

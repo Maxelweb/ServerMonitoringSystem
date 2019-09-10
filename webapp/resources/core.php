@@ -5,7 +5,7 @@ function arduino_requestData()
     $shellCommand = escapeshellcmd('python3 ' . SCRIPT_PATH);
     $shellOutput = trim(shell_exec($shellCommand));
 
- 	if(strlen($shellOutput) > 20)
+ 	if(strlen($shellOutput) > 20 || $shellOutput == "NULL")
  		return array();
  	else
  	{
@@ -42,30 +42,31 @@ function unserializeData($items)
 {
 	$sensors = array();
 
-	foreach ($items as $key => $value) 
-	{
-		switch ($key) 
+	if(!empty($items))
+		foreach ($items as $key => $value) 
 		{
-			case 'temperature' :
-				array_push($sensors, new Temperature($value));	
-				break;
+			switch ($key) 
+			{
+				case 'temperature' :
+					array_push($sensors, new Temperature($value));	
+					break;
 
-			case 'humidity' : 
-				array_push($sensors, new Humidity($value));
-				break;
-			
-			case 'door' : 
-				array_push($sensors, new Door($value));
-				break;
+				case 'humidity' : 
+					array_push($sensors, new Humidity($value));
+					break;
+				
+				case 'door' : 
+					array_push($sensors, new Door($value));
+					break;
 
-			case 'light' : 
-				array_push($sensors, new Light($value));
-				break;
+				case 'light' : 
+					array_push($sensors, new Light($value));
+					break;
 
-			default:
-				break;
+				default:
+					break;
+			}
 		}
-	}
 
 	return $sensors;
 }

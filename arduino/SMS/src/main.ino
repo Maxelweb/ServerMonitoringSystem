@@ -28,5 +28,5 @@ void loop()
   sms->Alarms();
 
   smsp->check();
-  delay(800);
+  delay(200);
 }
