@@ -23,10 +23,12 @@ void loop()
   // Cycle
   sms->updateSensors();
 
-  sms->LedWorking();
+  // Offline alerts
+  sms->LedAlerts();
   sms->LedConnected(smsp->isConnected());
   sms->Alarms();
 
+  // Serial connection
   smsp->check();
-  delay(200);
+  delay(250);
 }

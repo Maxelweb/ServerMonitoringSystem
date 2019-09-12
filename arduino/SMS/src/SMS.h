@@ -18,15 +18,17 @@
 #define SMAX_DISTANCE 4000
 #define SMIN_DISTANCE 20
 
+#define UPDATE_INTERVAL 2000
+
 class SMS
 {
 private:
     UltraSonicDistanceSensor * DoorSonar;
     dht11 * THSensor;
-    bool Working;
     bool Startup;
     double DoorDistance;
     int LightPower;
+    unsigned long currentInterval;
 
 public:
     bool EnableAlarm;
@@ -40,7 +42,7 @@ public:
 
     void Started();
     void Alarms();
-    void LedWorking();
+    void LedAlerts();
     void LedConnected(bool);
 };
 

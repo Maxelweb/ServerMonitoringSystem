@@ -3,7 +3,7 @@
 
 #include "SMS.h"
 
-#define FLAG_DEBUG true
+#define FLAG_DEBUG false
 
 class SMS_Protocol
 {

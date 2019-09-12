@@ -2,8 +2,8 @@
 
 SMS::SMS()
 : DoorSonar(new UltraSonicDistanceSensor(SONARPIN_TRIG, SONARPIN_ECHO)),
-THSensor(new dht11()), Working(false), Startup(false), DoorDistance(-1), LightPower(-1),
-EnableAlarm(true)
+THSensor(new dht11()), Startup(false), DoorDistance(-1), LightPower(-1),
+currentInterval(millis()+2000), EnableAlarm(true)
 { }
 
 void SMS::setInitialPinMode()
@@ -13,7 +13,6 @@ void SMS::setInitialPinMode()
 
 	pinMode(LEDPIN, OUTPUT);
 	pinMode(BUZZPIN, OUTPUT);
-	// pinMode(LEDCONN, OUTPUT);
 
 	pinMode(THPIN, INPUT);
 	pinMode(LIGHTPIN, INPUT);
@@ -21,13 +20,15 @@ void SMS::setInitialPinMode()
 
 void SMS::updateSensors()
 {
+	unsigned long interval = millis();
+	if(interval - currentInterval >= UPDATE_INTERVAL)
+	{
+		THSensor->read(THPIN);
+		currentInterval = interval;
+	}
+	
 	LightPower = analogRead(LIGHTPIN);
 	DoorDistance = DoorSonar->measureDistanceCm();
-
-	if(THSensor->read(THPIN) != 0)
-		Working = false;
-	else if(!Working)
-			Working = true;
 }
 
 int SMS::getTemperature() const
@@ -58,35 +59,32 @@ void SMS::Started()
 	{
 		NewTone(BUZZPIN, 1000, 500);
 		delay(500);
-		noNewTone(BUZZPIN);
 		Startup = true;
 	}
 }
 
-void SMS::LedWorking()
+void SMS::LedAlerts()
 {
 	/* Red Led Cases:
 		- off == Working
 		- on == Sensors not working
-		- blink == Temperature or Humidity too high	
 	*/
 
-	if(Working 	&& getTemperature() < 30 
-				&& getHumidity() < 80 
-				&& getHumidity() > 30)
+	if(getTemperature() < 30 
+		&& getHumidity() < 80 
+		&& getHumidity() > 30)
 	{
 		digitalWrite(LEDPIN, LOW);
 	}
-	else if(!Working)
+	else if(getHumidity() < 30 || getHumidity() > 80)
 	{
+		digitalWrite(LEDPIN, LOW);
+		delay(20);
 		digitalWrite(LEDPIN, HIGH);
 	}
 	else
 	{
-		digitalWrite(LEDPIN, LOW);
-		delay(20);
 		digitalWrite(LEDPIN, HIGH);
-		delay(20);
 	}
 }
 
@@ -94,17 +92,11 @@ void SMS::LedConnected(bool conn)
 {
 	if(!conn)
 	{
-		for(unsigned short i = 0; i<250; i+=10)
-		{
-			analogWrite(LEDCONN, i);
-			delay(20);
-		}
-
-		for(unsigned short i = 250; i>0; i-=10)
-		{	
-			analogWrite(LEDCONN, i);
-			delay(20);
-		}
+		analogWrite(LEDCONN, 150);
+	}
+	else
+	{
+		analogWrite(LEDCONN, 0);
 	}
 }
 
@@ -119,11 +111,11 @@ void SMS::Alarms()
 	{
 		if(getTemperature() > 30)
 		{
-			NewTone(BUZZPIN, 800, 350);
+			NewTone(BUZZPIN, 800, 100);
 		}
 		else if(isLightUp() && !isDoorOpen())
 		{
-			NewTone(BUZZPIN, 1200, 200);
+			NewTone(BUZZPIN, 1200, 100);
 		}
 	}
 }

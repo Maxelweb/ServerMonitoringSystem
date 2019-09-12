@@ -53,7 +53,8 @@ void SMS_Protocol::check()
             Connected = false;
         }
     }
-
+    
+    serialize();
 
 }
 
