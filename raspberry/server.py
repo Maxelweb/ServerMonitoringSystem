@@ -20,7 +20,7 @@ from classes.terminal_echo import echo
 # find /sys/bus/usb/devices/usb*/ -name dev
 # To do: try catch for multiple usb ports
 
-sys.stdout = open('sms-logs.txt', 'w')
+# sys.stdout = open('sms-logs.txt', 'w')
 
 # Main
 
@@ -67,11 +67,11 @@ try:
 	    elif msg == "ping" :
 	    	socket.send_string("pong")
 
-	    elif msg == "alarm_on" :
-	    	monitor.setAlarm(1)
+	    #elif msg == "alarm_on" :
+	    #	monitor.setAlarm(1)
 
-	    elif msg == "alarm_off" :
-	    	monitor.setAlarm(0)
+	    #elif msg == "alarm_off" :
+	    #	monitor.setAlarm(0)
 
 	    elif msg == "alarm" : 
 	    	socket.send_string(monitor.getAlarmStatus())

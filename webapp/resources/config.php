@@ -8,7 +8,7 @@ define("SCRIPT_PATH", "/home/maxel/sms/client.py"); // Python script location
 
 $_platforms = array(				// Check activity of these platforms
 	"Raspberry" => "192.168.1.250",
-	"Internet" => "192.168.1.1"
+	"Internet" => "192.168.1.254"
 );
 
 

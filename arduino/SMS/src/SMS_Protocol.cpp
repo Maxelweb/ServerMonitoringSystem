@@ -41,10 +41,11 @@ void SMS_Protocol::check()
     {
         if(LastRequest == "plz data")
             serialize();
-        else if(LastRequest == "plz alarm off")
+       /* else if(LastRequest == "plz alarm off")
             Parent->EnableAlarm = false;
         else if(LastRequest == "plz alarm on")
             Parent->EnableAlarm = true;
+        */
         else if(LastRequest == "plz alarm")
             Serial.println(Parent->EnableAlarm == true ? 1 : 0);
         else if(LastRequest == "bye")
@@ -53,8 +54,6 @@ void SMS_Protocol::check()
             Connected = false;
         }
     }
-    
-    serialize();
 
 }
 

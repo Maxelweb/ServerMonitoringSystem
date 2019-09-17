@@ -3,7 +3,7 @@
 import zmq
 import sys
 
-if len(sys.argv) != 2 or sys.argv[1] not in ("get_data", "alarm_on", "alarm_off", "alarm", "close", "ping") :
+if len(sys.argv) != 2 or sys.argv[1] not in ("get_data", "alarm", "close", "ping") :
 	print("ERROR")
 else : 
 	try :

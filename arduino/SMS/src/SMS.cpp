@@ -66,25 +66,24 @@ void SMS::Started()
 void SMS::LedAlerts()
 {
 	/* Red Led Cases:
-		- off == Working
-		- on == Sensors not working
+		- off == Ok
+		- blink == Low / High humidity
+		- on == High temperature
 	*/
 
-	if(getTemperature() < 30 
-		&& getHumidity() < 80 
-		&& getHumidity() > 30)
-	{
-		digitalWrite(LEDPIN, LOW);
-	}
-	else if(getHumidity() < 30 || getHumidity() > 80)
+	if(getHumidity() < 30 || getHumidity() > 80)
 	{
 		digitalWrite(LEDPIN, LOW);
 		delay(20);
 		digitalWrite(LEDPIN, HIGH);
 	}
+	else if(getTemperature() < 30)
+	{
+		digitalWrite(LEDPIN, LOW);
+	}
 	else
 	{
-		digitalWrite(LEDPIN, HIGH);
+		digitalWrite(LEDPIN, LOW);
 	}
 }
 
@@ -104,7 +103,7 @@ void SMS::Alarms()
 {
 	/*	Alarms:
 			- Temperature to high in server room
-			- forgotten light up in server room
+			- forgot light up in server room (disabled)
 	*/
 
 	if(EnableAlarm)
@@ -113,9 +112,9 @@ void SMS::Alarms()
 		{
 			NewTone(BUZZPIN, 800, 100);
 		}
-		else if(isLightUp() && !isDoorOpen())
+		/*else if(isLightUp() && !isDoorOpen())
 		{
 			NewTone(BUZZPIN, 1200, 100);
-		}
+		}*/
 	}
 }

@@ -2,10 +2,10 @@
 
 function arduino_requestData()
 {
-    $shellCommand = escapeshellcmd('python3 ' . SCRIPT_PATH);
+    $shellCommand = escapeshellcmd('python3 ' . SCRIPT_PATH . " get_data");
     $shellOutput = trim(shell_exec($shellCommand));
 
- 	if(strlen($shellOutput) > 20 || $shellOutput == "NULL")
+ 	if(strlen($shellOutput) > 20 || $shellOutput == "NULL" || $shellOutput == "ERROR")
  		return array();
  	else
  	{
@@ -26,6 +26,12 @@ function showSensorsWidgets()
 		{
 			$sensor->printWidget();
 		}
+	else
+	{
+		echo '<span class="box bad hide" id="ErrorSensors">
+				<i class="fas fa-exclamation-circle"></i> Error: no data fetched. Reload the page or wait for automatic refresh.
+			</span>';
+	}
 
 }
 
