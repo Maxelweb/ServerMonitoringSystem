@@ -10,3 +10,7 @@ elseif($s == "dashboard-hardware")
 {
 	showHardwareWidget();
 }
+elseif($s == "wakeup")
+{
+	echo wakeUp($id);
+}

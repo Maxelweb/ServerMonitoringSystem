@@ -33,6 +33,8 @@ class HardwareActivity
 
 	function printWidget()
 	{
+		global $_wol_mac; 
+
 		if(!empty($this->platforms))
 		{
 			if($this->active() == count($this->cplat))
@@ -57,7 +59,8 @@ class HardwareActivity
 				foreach ($this->cplat as $key => $value) 
 					echo "<tr>
 							<th>$key</th>
-							<td>".($value ? success("online",1) : error("offline",1))."</td>
+							<td>".($value ? success("online", 1) : error("offline",1))." 
+								".(!$value && isset($_wol_mac[$key]) ? "<small>(<a href='javascript:void(0)' onclick=\"wakeUp('".$key."')\">Wake up</a>)</small>" : '')."</td>
 						  </tr>";
 
 			echo '			</table>
@@ -123,9 +126,9 @@ class Temperature extends Sensor
 
 	protected function build()
 	{
-		if($this->value < 2 || $this->value > 40)
+		if($this->value < 10 || $this->value > 30)
 			$this->status = "danger";
-		elseif($this->value < 15 || $this->value > 30)
+		elseif($this->value < 15 || $this->value > 25)
 			$this->status = "warning";
 		else
 			$this->status = "success";
@@ -148,7 +151,7 @@ class Humidity extends Sensor
 	{
 		if($this->value >= 80)
 			$this->status = "danger";
-		elseif($this->value >= 60)
+		elseif($this->value >= 60 || $this->value <= 15)
 			$this->status = "warning";
 		else
 			$this->status = "success";

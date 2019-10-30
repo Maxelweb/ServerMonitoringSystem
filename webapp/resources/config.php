@@ -11,6 +11,13 @@ $_platforms = array(				// Check activity of these platforms
 	"Internet" => "192.168.1.254"
 );
 
+$_wol_mac = array(					// MAC address
+	"Raspberry" => "AA:BB:CC:DD"
+);
+
+									// wol lan broadcast
+$_wol_broadcast = "255.255.255.0";
+
 
 // DO NOT CHANGE UNDER THIS LINE
 // ========================================================

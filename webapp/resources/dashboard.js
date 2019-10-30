@@ -78,6 +78,26 @@ function updateHardwareMonitor() {
 }
 
 
+function wakeUp(hw)
+{
+   var Err = $("#ErrorHardware");
+
+    $.ajax({
+        url: "refresh.php?s=wakeup&id="+hw, 
+        error: function () 
+        {
+            if(Err.hasClass("hide")) 
+                Err.removeClass("hide");
+        },
+        success: function(result) 
+        {
+            if(!Err.hasClass("hide")) 
+                Err.addClass("hide");
+        }
+    }); 
+}
+
+
 $(document).ready(function() {
 
     toggleAutoRefresh();
