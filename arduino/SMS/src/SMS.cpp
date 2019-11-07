@@ -43,7 +43,7 @@ int SMS::getHumidity() const
 
 bool SMS::isDoorOpen()
 {
-	return DoorDistance > 20; // cm
+	return DoorDistance > 18; // cm
 }
 
 bool SMS::isLightUp()
@@ -71,15 +71,15 @@ void SMS::LedAlerts()
 		- on == High temperature
 	*/
 
-	if(getHumidity() < 30 || getHumidity() > 80)
+	if(getTemperature() > 30)
+	{
+		digitalWrite(LEDPIN, HIGH);
+	}
+	else if(getHumidity() > 60)
 	{
 		digitalWrite(LEDPIN, LOW);
 		delay(20);
 		digitalWrite(LEDPIN, HIGH);
-	}
-	else if(getTemperature() < 30)
-	{
-		digitalWrite(LEDPIN, LOW);
 	}
 	else
 	{
