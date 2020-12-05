@@ -14,3 +14,7 @@ elseif($s == "wakeup")
 {
 	echo wakeUp($id);
 }
+elseif($s == "webcam")
+{
+	showWebcam();
+}

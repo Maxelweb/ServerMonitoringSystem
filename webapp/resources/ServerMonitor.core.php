@@ -204,13 +204,13 @@ class Light extends Sensor
 		if($this->value == 1)
 		{
 			$this->status = "default-warning";
-			$this->content = 'The light in the room is <strong>ACTIVE</strong>';
+			$this->content = 'The light in the room is <strong>ON</strong>';
 			$this->iconType = "far";
 		}
 		else
 		{
 			$this->status = "default-success";
-			$this->content = 'The light in the room is <strong>INACTIVE</strong>';
+			$this->content = 'The light in the room is <strong>OFF</strong>';
 		}
 
 	}

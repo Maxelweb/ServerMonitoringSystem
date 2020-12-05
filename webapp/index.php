@@ -20,6 +20,10 @@
 			require_once 'resources/pages/updates.php';
 			break;
 	
+		case 'webcam':
+			require_once 'resources/pages/webcam.php';
+			break;
+
 		default:
 			require_once 'resources/pages/dashboard.php';
 			break;

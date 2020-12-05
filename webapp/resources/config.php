@@ -18,12 +18,14 @@ $_wol_mac = array(					// MAC address
 									// wol lan broadcast
 $_wol_broadcast = "255.255.255.0";
 
+$_webcam_url = ""; // Webcam url
+
 
 // DO NOT CHANGE UNDER THIS LINE
 // ========================================================
 
 define("REPO", "https://github.com/Maxelweb/ServerMonitoringSystem");
-define("VERSION", "0.1");
+define("VERSION", "0.1.1");
 define("DEBUG", true);
 
 if(DEBUG)

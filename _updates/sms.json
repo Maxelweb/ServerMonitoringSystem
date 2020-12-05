@@ -1,6 +1,6 @@
 {
-	"version" : "0.1",
-	"date"	: "09-2019",
+	"version" : "0.1.1",
+	"date"	: "12-2020",
 	"status"  : "alpha",
-	"description" : "Under development"
+	"description" : "Added camera support, fixed typos in sensors"
 }

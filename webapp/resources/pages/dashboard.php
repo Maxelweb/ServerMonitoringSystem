@@ -22,7 +22,7 @@
 			<i class='fas fa-exclamation-circle'></i> An error has occurred while checking hardware activity, retrying soon...
 		</span>
 		<div id="HardwareContainer">
-			&nbsp; Loading hardware status sensors.. <i class="fas fa-circle-notch fa-spin"></i>
+			&nbsp; Loading hardware status.. <i class="fas fa-circle-notch fa-spin"></i>
 			<?php //showHardwareWidget(); ?>
 		</div>
 	</div>

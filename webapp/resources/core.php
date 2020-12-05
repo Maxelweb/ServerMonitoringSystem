@@ -17,6 +17,13 @@ function arduino_requestData()
 }
 
 
+function showWebcam($stream=true) {
+	global $_webcam_url;
+	$url = $stream ? $_webcam_url.'?action=stream' : $_webcam_url;
+	echo "<img src='$url'>";
+}
+
+
 # Taken from https://github.com/justicenode/php-wol/blob/master/html/wake.php
 
 function wakeUp($id)
