@@ -1,29 +1,26 @@
 <?php
 // ========================================================
-// Configuration Settings - EDIT FROM HERE
+// Configuration Settings
 // ========================================================
 
-define("NAME", "Home"); // Server location or name
+// define("NAME", "Home"); // Server location or name
+// define("SCRIPT_PATH", "/home/maxel/sms/client.py"); // Python script location 
+
+// $_platforms = array(				// Check activity of these platforms
+// 	"Raspberry" => "192.168.1.250",
+// 	"Internet" => "192.168.1.254"
+// );
+
+// $_wol_mac = array(					// MAC address
+// 	"Raspberry" => "AA:BB:CC:DD"
+// );
+
+// 									// wol lan broadcast
+// $_wol_broadcast = "255.255.255.0";
+
+// $_webcam_url = ""; // Webcam url
+
 define("SCRIPT_PATH", "/home/maxel/sms/client.py"); // Python script location 
-
-$_platforms = array(				// Check activity of these platforms
-	"Raspberry" => "192.168.1.250",
-	"Internet" => "192.168.1.254"
-);
-
-$_wol_mac = array(					// MAC address
-	"Raspberry" => "AA:BB:CC:DD"
-);
-
-									// wol lan broadcast
-$_wol_broadcast = "255.255.255.0";
-
-$_webcam_url = ""; // Webcam url
-
-
-// DO NOT CHANGE UNDER THIS LINE
-// ========================================================
-
 define("REPO", "https://github.com/Maxelweb/ServerMonitoringSystem");
 define("VERSION", "0.1.1");
 define("DEBUG", true);
@@ -46,6 +43,8 @@ require_once 'core.php';
 require_once 'ServerMonitor.core.php';
 require_once 'ServerMonitor.extra.php';
 
+initializeConfiguration();
 
+define("NAME", $_config->app_name); // Server location or name
 
 

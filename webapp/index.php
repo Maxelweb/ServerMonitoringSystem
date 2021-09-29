@@ -15,7 +15,10 @@
 			require_once 'resources/pages/logs.php';
 			break;
 		*/
-			
+		case 'config': 
+			require_once 'resources/pages/configuration.php';
+			break;
+
 		case 'updates':
 			require_once 'resources/pages/updates.php';
 			break;

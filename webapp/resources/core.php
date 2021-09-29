@@ -1,5 +1,27 @@
 <?php 
 
+
+function initializeConfiguration() {
+	global $_config;
+	$file = "./database/config.json";
+	$_config = json_decode($file, false);
+}
+
+function editConfiguration($_new_config) {
+	global $_config;
+	$file = "./database/config.json";
+	$config_raw = json_encode($_new_config);
+	$configFile = fopen($file, "w+") or die("Error editing configuration!");
+	fwrite($configFile, $config_raw);
+	$_config = $_new_config;
+}
+
+function isValidJson($string)
+{
+    json_decode($string);
+    return (json_last_error() == JSON_ERROR_NONE);
+}
+
 function arduino_requestData()
 {
     $shellCommand = escapeshellcmd('python3 ' . SCRIPT_PATH . " get_data");
@@ -84,9 +106,9 @@ function showSensorsWidgets()
 
 function showHardwareWidget()
 {
-	global $_platforms;
+	global $_config;
 
-	$h = new HardwareActivity($_platforms);
+	$h = new HardwareActivity($_config); // FIXME: not working, config is new and have not the same $_platform structure
 	$h->printWidget();
 
 }

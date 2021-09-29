@@ -9,7 +9,7 @@ class HardwareActivity
 	{
 		if(!empty($platformsArray)) 
 		{
-			$this->platforms = $platformsArray;
+			$this->platforms = $platformsArray; // FIXME: not working
 			$this->checkActivity();
 		}
 	}
