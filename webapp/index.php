@@ -7,7 +7,12 @@
 	switch ($s) 
 	{
 		case 'config': 
+			require_once 'resources/controller/configuration.php';
 			require_once 'resources/view/configuration.php';
+			break;
+
+		case 'wol': 
+			require_once 'resources/view/wol.php';
 			break;
 
 		case 'updates':

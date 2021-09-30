@@ -1,6 +1,6 @@
 <section> 
 
-	<h3>&#x1F4F7; Webcam <i class="fas fa-circle fa-xs icon-blink" style="color: red"></i></h3>
+	<h3><i class="fas fa-camera"></i> Webcam <i class="fas fa-circle fa-xs icon-blink" style="color: red"></i></h3>
 
 	<div class="widgets-container">
 

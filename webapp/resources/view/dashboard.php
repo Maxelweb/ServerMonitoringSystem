@@ -1,6 +1,6 @@
 <section> 
 
-	<h3>&#x1F3E0; Dashboard</h3>
+	<h3><i class="fas fa-home"></i> Dashboard</h3>
 
 	<div class="control-container">
 		<input type="checkbox" class="apple-switch" id="AutoRefresh" checked value="1"> Auto-refresh &nbsp; 

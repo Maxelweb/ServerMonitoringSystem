@@ -1,5 +1,5 @@
 <section>
-	<h3>&#x2615; Updates</h3>
+	<h3><i class="fas fa-coffee"></i> Updates</h3>
 	<?php 
 		$hup = new Updates();
 		if($hup->latestVersion() == "N/A")
