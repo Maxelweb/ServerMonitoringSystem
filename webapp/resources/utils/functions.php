@@ -1,26 +1,27 @@
 <?php 
 
+// Configuration
+// ====================================
 
 function initializeConfiguration() {
 	global $_config;
-	$file = "./database/config.json";
-	$_config = json_decode($file, false);
+	
+	$configFile = fopen(CONFIG_FILE, "r") or die("Error getting the configuration, the path is probably empty!");
+	$rawFile = fread($configFile, filesize(CONFIG_FILE));
+	$_config = json_decode($rawFile, false);
 }
 
 function editConfiguration($_new_config) {
 	global $_config;
-	$file = "./database/config.json";
 	$config_raw = json_encode($_new_config);
-	$configFile = fopen($file, "w+") or die("Error editing configuration!");
+	$configFile = fopen(CONFIG_FILE, "w+") or die("Error editing configuration!");
 	fwrite($configFile, $config_raw);
 	$_config = $_new_config;
 }
 
-function isValidJson($string)
-{
-    json_decode($string);
-    return (json_last_error() == JSON_ERROR_NONE);
-}
+
+// Arduino Interface
+// ====================================
 
 function arduino_requestData()
 {
@@ -39,6 +40,9 @@ function arduino_requestData()
 }
 
 
+// Webcam Interface
+// ====================================
+
 function showWebcam($stream=true) {
 	global $_webcam_url;
 	$url = $stream ? $_webcam_url.'?action=stream' : $_webcam_url;
@@ -46,45 +50,59 @@ function showWebcam($stream=true) {
 }
 
 
+// Wake-On-Lan
+// ====================================
 # Taken from https://github.com/justicenode/php-wol/blob/master/html/wake.php
 
-function wakeUp($id)
-{
-	global $_wol_mac;
-	global $_wol_broadcast;
-
-	if(isset($_wol_mac[$id]))
-	{
-		$broadcast = $_wol_broadcast;
-		$mac_array = explode(':', $_wol_mac[$id]);
-		$hw_addr = '';
-
-		foreach($mac_array AS $octet) 
-			$hw_addr .= chr(hexdec($octet));
-
-		$packet = '';
-		for ($i = 1; $i <= 6; $i++)
-			$packet .= chr(255);
-
-		for ($i = 1; $i <= 16; $i++) 
-			$packet .= $hw_addr;
-
-		$sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-		if($sock) 
-		{
-			$options = socket_set_option($sock, 1, 6, true);
-			if ($options >=0) 
-			{    
-				$e = socket_sendto($sock, $packet, strlen($packet), 0, $broadcast, 7);
-				socket_close($sock);
-				return true;
-			}    
-		}
-	}
-	else
-		return false;
+function getItemFromPlatformName($name){
+	global $_config;
+	$platforms = (array) $_config->platforms;
+	$key = array_search($name, array_column($platforms, "name"));
+	return (object) $platforms[$key];
 }
 
+function getKeyFromPlatformName($name){
+	global $_config;
+	$platforms = (array) $_config->platforms;
+	return array_search($name, array_column($platforms, "name"));
+}
+
+
+function wakeUp($platform_name)
+{
+	global $_config;
+
+	$broadcast = $_config->wol_broadcast;
+	$mac_array = explode(':', getItemFromPlatformName($platform_name)->mac_addr);
+	$hw_addr = '';
+
+	foreach($mac_array AS $octet) 
+		$hw_addr .= chr(hexdec($octet));
+
+	$packet = '';
+	for ($i = 1; $i <= 6; $i++)
+		$packet .= chr(255);
+
+	for ($i = 1; $i <= 16; $i++) 
+		$packet .= $hw_addr;
+
+	$sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+	if($sock) 
+	{
+		$options = socket_set_option($sock, 1, 6, true);
+		if ($options >=0) 
+		{    
+			$e = socket_sendto($sock, $packet, strlen($packet), 0, $broadcast, 7);
+			socket_close($sock);
+			return true;
+		}    
+	}
+	return false;
+}
+
+
+// View utils
+// ====================================
 
 function showSensorsWidgets()
 {
@@ -108,7 +126,7 @@ function showHardwareWidget()
 {
 	global $_config;
 
-	$h = new HardwareActivity($_config); // FIXME: not working, config is new and have not the same $_platform structure
+	$h = new HardwareActivity($_config->platforms);
 	$h->printWidget();
 
 }
@@ -146,14 +164,20 @@ function unserializeData($items)
 	return $sensors;
 }
 
+// Extra
+// ====================================
 
-function success($msg, $simple=0)
-{
+function isValidJson($string) {
+    json_decode($string);
+    return (json_last_error() == JSON_ERROR_NONE);
+}
+
+function success($msg, $simple=0) {
 	$cl = !$simple ? "good box" : "good";
 	return '<span class="'.$cl.'">'.$msg.'</span>';
 }
-function error($msg, $simple=0)
-{
+
+function error($msg, $simple=0) {
 	$cl = !$simple ? "bad box" : "bad";
 	return '<span class="'.$cl.'">'.$msg.'</span>';
 }

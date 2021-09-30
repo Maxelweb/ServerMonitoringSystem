@@ -6,29 +6,20 @@
 
 	switch ($s) 
 	{
-		
-		/*case 'real-time':
-			require_once 'resources/pages/real-time.php';
-			break;
-		
-		case 'logs':
-			require_once 'resources/pages/logs.php';
-			break;
-		*/
 		case 'config': 
-			require_once 'resources/pages/configuration.php';
+			require_once 'resources/view/configuration.php';
 			break;
 
 		case 'updates':
-			require_once 'resources/pages/updates.php';
+			require_once 'resources/view/updates.php';
 			break;
 	
 		case 'webcam':
-			require_once 'resources/pages/webcam.php';
+			require_once 'resources/view/webcam.php';
 			break;
 
 		default:
-			require_once 'resources/pages/dashboard.php';
+			require_once 'resources/view/dashboard.php';
 			break;
 	}
 

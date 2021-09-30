@@ -2,7 +2,8 @@
     "app_name": "Home",
     "wol_broadcast": "255.255.255.0",
     "webcam_url": "",
-    "platforms" : [{
+    "platforms" : [
+    {
         "name": "example1",
         "ip_addr" : "192.168.1.1",
         "mac_addr": "AA:BB:CC:DD:EE:FF"

@@ -20,9 +20,10 @@
 
 // $_webcam_url = ""; // Webcam url
 
-define("SCRIPT_PATH", "/home/maxel/sms/client.py"); // Python script location 
+define("SCRIPT_PATH", dirname(__FILE__)."/utils/client.py"); // Python script location 
+define("CONFIG_FILE", dirname(__FILE__)."/database/config.json");
 define("REPO", "https://github.com/Maxelweb/ServerMonitoringSystem");
-define("VERSION", "0.1.1");
+define("VERSION", "1.0.0");
 define("DEBUG", true);
 
 if(DEBUG)
@@ -32,6 +33,9 @@ if(DEBUG)
 	error_reporting(E_ALL);
 }
 
+// Initialize global variables
+
+$_config = (object) array();
 $s = isset($_GET['s']) ? $_GET['s'] : "";
 $a = isset($_GET['a']) ? $_GET['a'] : 0;
 $id = isset($_GET['id']) ? $_GET['id'] : 0;
@@ -39,12 +43,15 @@ $id = isset($_GET['id']) ? $_GET['id'] : 0;
 
 // Libs
 
-require_once 'core.php';
-require_once 'ServerMonitor.core.php';
-require_once 'ServerMonitor.extra.php';
+require_once 'utils/functions.php';
+require_once 'model/HardwareActivity.php';
+require_once 'model/Sensor.php';
+require_once 'model/Updates.php';
+
+// Initialize configuration
 
 initializeConfiguration();
 
-define("NAME", $_config->app_name); // Server location or name
+define("NAME", $_config->app_name);
 
 

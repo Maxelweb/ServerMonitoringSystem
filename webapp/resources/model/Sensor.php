@@ -1,76 +1,4 @@
-<?php 
-
-class HardwareActivity
-{
-	private $platforms;
-	private $cplat = array();
-
-	function __construct($platformsArray)
-	{
-		if(!empty($platformsArray)) 
-		{
-			$this->platforms = $platformsArray; // FIXME: not working
-			$this->checkActivity();
-		}
-	}
-
-	function checkActivity()
-	{
-		foreach($this->platforms as $name => $ip)
-		{
-			exec("ping -c 1 ".$ip, $output, $result);
-			$this->cplat[$name] = $result==0;
-		}
-	}
-
-	function active()
-	{
-		$i = 0;
-		foreach($this->cplat as $n => $v)
-			if($v) $i++; 
-		return $i;
-	}
-
-	function printWidget()
-	{
-		global $_wol_mac; 
-
-		if(!empty($this->platforms))
-		{
-			if($this->active() == count($this->cplat))
-				$col = "green";
-			elseif($this->active() == 0)
-				$col = "red";
-			else
-				$col = "orange";
-
-
-			echo '<div class="widget widget-default widget-left">
-					<div class="title">
-						<i class="fas fa-circle fa-xs icon-blink" style="color: '.$col.'"></i>
-						<i class="fas fa-sm fa-server"></i>
-						<small>Hardware Activity</small>
-					</div>	
-					<div class="content">
-						<div class="responsive">
-							<table>';
-
-			if(!empty($this->cplat))
-				foreach ($this->cplat as $key => $value) 
-					echo "<tr>
-							<th>$key</th>
-							<td>".($value ? success("online", 1) : error("offline",1))." 
-								".(!$value && isset($_wol_mac[$key]) ? "<small>(<a href='javascript:void(0)' onclick=\"wakeUp('".$key."')\">Wake up</a>)</small>" : '')."</td>
-						  </tr>";
-
-			echo '			</table>
-					  	</div>
-					</div>
-				  </div>';
-		}
-	}
-}
-
+<?php
 
 abstract class Sensor
 {
@@ -216,5 +144,4 @@ class Light extends Sensor
 	}
 
 }
-
 

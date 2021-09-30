@@ -5,11 +5,17 @@
  *	 	 Web app CSS
  */
 
+@font-face {
+	font-family: Titillium Web;
+	src: url(font/TitilliumWeb-Regular.ttf);
+}
+  
+ 
 
 body{
 	background-color: #444;
 	color: #333;
-	font-family: Verdana, sans-serif;
+	font-family: Titillium Web, Arial, sans-serif;
 	font-size: 10.5pt;
 	line-height: 150%;
 }
@@ -34,7 +40,7 @@ header, nav, article, footer{
 header{
 	background-color: #CCC;
 	border-bottom: 1px solid #AAA;
-	text-align: left;
+	text-align: center;
 	border-top-right-radius: 3px;
 	border-top-left-radius: 3px;
 }
