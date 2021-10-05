@@ -18,6 +18,9 @@ void SMS::setInitialPinMode()
 	pinMode(LIGHTPIN, INPUT);
 }
 
+// Update Readings
+// ----------------------------------
+
 void SMS::updateSensors()
 {
 	unsigned long interval = millis();
@@ -30,6 +33,9 @@ void SMS::updateSensors()
 	LightPower = analogRead(LIGHTPIN);
 	DoorDistance = DoorSonar->measureDistanceCm();
 }
+
+// Current Sensors Readings
+// ----------------------------------
 
 int SMS::getTemperature() const
 {
@@ -52,6 +58,8 @@ bool SMS::isLightUp()
 	return LightPower < 160;
 }
 
+// Led and Audio alerts
+// ----------------------------------
 
 void SMS::Started()
 {
@@ -103,7 +111,6 @@ void SMS::Alarms()
 {
 	/*	Alarms:
 			- Temperature to high in server room
-			- forgot light up in server room (disabled)
 	*/
 
 	if(EnableAlarm)
@@ -112,9 +119,5 @@ void SMS::Alarms()
 		{
 			NewTone(BUZZPIN, 800, 100);
 		}
-		/*else if(isLightUp() && !isDoorOpen())
-		{
-			NewTone(BUZZPIN, 1200, 100);
-		}*/
 	}
 }
