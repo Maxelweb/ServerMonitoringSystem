@@ -1,13 +1,20 @@
 
-#include "SMS_Protocol.h"
+#include "SMS.h"
+#include "SMS_API.h"
 
 
 SMS * sms = new SMS();
-
+SMS_API * api = new SMS_API(
+                      IPAddress(192, 168, 1, 1),  
+                      IPAddress(192, 168, 1, 254), 
+                      IPAddress(192, 168, 1, 254), 
+                      IPAddress(255,255,255,0), 
+                      80);
 
 void setup()
 {
   sms->setInitialPinMode();
+  api->startServer();
 }
 
 
@@ -24,7 +31,8 @@ void loop()
   sms->LedConnected(false); // FIXME: pass if lan is connected
   sms->Alarms();
 
+ 
   // LAN connection
-  
-  delay(250);
+  api->serve();
+  delay(100);
 }

@@ -1,27 +1,24 @@
 #include "SMS_API.h"
 
-SMS_API::SMS_API(byte * mac, IPAddress ip, uint8_t port)
- : mac_addr(mac),ip_addr(ip),port(port) 
-{ }
-
-
-void SMS_API::initializeServer() {
-    this->mac_addr = {
-        0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
-    };
-    EthernetServer server(this->port);
-    this->server = server;
-    return;
+SMS_API::SMS_API(IPAddress ip, IPAddress gateway, IPAddress dns, IPAddress subnet, uint16_t port) {
+    
+    byte default_mac[] = {0xDE, 0xBE, 0xBE, 0xEF, 0xFE, 0xED};
+    
+    ip_addr = ip;
+    gateway_addr = gateway;
+    dns_addr = dns;
+    subnet_addr = subnet;
+    port = port;
+    mac_addr = default_mac;
 }
+
+
 void SMS_API::startServer(){
-    Ethernet.begin(this->mac_addr, this->port);
-    this->server.begin();
-    // Serial.print("Server is at ");
-    // Serial.println(Ethernet.localIP());
+    Ethernet.begin(mac_addr, ip_addr, dns_addr, gateway_addr, subnet_addr);
+    server.begin();
     return;
 }
 
-// TODO: fix this and checkout noduino https://github.com/fcaldas/Noduino
 
 void SMS_API::serve(){
     // listen for incoming clients
@@ -42,19 +39,11 @@ void SMS_API::serve(){
             client.println("HTTP/1.1 200 OK");
             client.println("Content-Type: text/html");
             client.println("Connection: close");  // the connection will be closed after completion of the response
-            client.println("Refresh: 5");  // refresh the page automatically every 5 sec
             client.println();
             client.println("<!DOCTYPE HTML>");
             client.println("<html>");
             // output the value of each analog input pin
-            for (int analogChannel = 0; analogChannel < 6; analogChannel++) {
-                int sensorReading = analogRead(analogChannel);
-                client.print("analog input ");
-                client.print(analogChannel);
-                client.print(" is ");
-                client.print(sensorReading);
-                client.println("<br />");
-            }
+            client.println("hello world lmao");
             client.println("</html>");
             break;
             }
