@@ -1,10 +1,10 @@
 
-#include "SMS.h"
 #include "SMS_API.h"
 
 
 SMS * sms = new SMS();
 SMS_API * api = new SMS_API(
+                      sms,
                       IPAddress(192, 168, 1, 1),  
                       IPAddress(192, 168, 1, 254), 
                       IPAddress(192, 168, 1, 254), 
@@ -34,5 +34,5 @@ void loop()
  
   // LAN connection
   api->serve();
-  delay(100);
+  delay(250);
 }

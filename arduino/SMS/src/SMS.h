@@ -4,13 +4,12 @@
 #include "Arduino.h"
 #include "HCSR04.h"
 #include "NewTone.h"
-#include "DHT.h"
+#include "dht11.h"
 
 #define LEDPIN 2
 #define BUZZPIN 3
 #define LEDCONN 5
 
-#define DHTTYPE DHT11 
 #define THPIN 4
 #define LIGHTPIN A0
 
@@ -25,7 +24,7 @@ class SMS
 {
 private:
     UltraSonicDistanceSensor * DoorSonar;
-    DHT * THSensor;
+    dht11 * THSensor;
     bool Startup;
     float Temperature;
     float Humidity;

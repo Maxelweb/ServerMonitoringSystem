@@ -2,7 +2,7 @@
 
 SMS::SMS()
 : DoorSonar(new UltraSonicDistanceSensor(SONARPIN_TRIG, SONARPIN_ECHO)),
-THSensor(new DHT(THPIN, DHTTYPE)), Startup(false), DoorDistance(-1), LightPower(-1),
+THSensor(new dht11()), Startup(false), DoorDistance(-1), LightPower(-1),
 currentInterval(millis()+2000), EnableAlarm(true)
 { }
 
@@ -16,6 +16,7 @@ void SMS::setInitialPinMode()
 
 	pinMode(THPIN, INPUT);
 	pinMode(LIGHTPIN, INPUT);
+	
 }
 
 // Update Readings
@@ -26,13 +27,13 @@ void SMS::updateSensors()
 	unsigned long interval = millis();
 	if(interval - currentInterval >= UPDATE_INTERVAL)
 	{
-		Temperature = THSensor->readTemperature();
-		Humidity = THSensor->readHumidity();
+		THSensor->read(THPIN);		
 		currentInterval = interval;
 	}
 	
 	LightPower = analogRead(LIGHTPIN);
 	DoorDistance = DoorSonar->measureDistanceCm();
+	// Serial.println("Sensors updated!");
 }
 
 // Current Sensors Readings
@@ -40,12 +41,12 @@ void SMS::updateSensors()
 
 int SMS::getTemperature() const
 {
-	return Temperature;
+	return THSensor->temperature;
 }
 
 int SMS::getHumidity() const
 {
-	return Humidity;
+	return THSensor->humidity;
 }
 
 bool SMS::isDoorOpen()
