@@ -131,7 +131,7 @@ class Light extends Sensor
 	{
 		if($this->value == 1)
 		{
-			$this->status = "default-warning";
+			$this->status = "default-danger";
 			$this->content = 'The light in the room is <strong>ON</strong>';
 			$this->iconType = "far";
 		}
@@ -139,6 +139,36 @@ class Light extends Sensor
 		{
 			$this->status = "default-success";
 			$this->content = 'The light in the room is <strong>OFF</strong>';
+		}
+
+	}
+
+}
+
+
+class IntrusionDetection extends Sensor
+{
+	function __construct($jsonValue)
+	{
+		$this->name = "Intrusion Detection";
+		$this->value = $jsonValue;
+		$this->icon = "smile-beam";
+		$this->iconType = "far";
+		$this->build();
+	}
+
+	protected function build()
+	{
+		if($this->value == 1)
+		{
+			$this->status = "danger";
+			$this->content = 'Someone might be in the Room';
+			$this->icon = "meh-rolling-eyes";
+		}
+		else
+		{
+			$this->status = "default-success";
+			$this->content = 'No one in the Room';
 		}
 
 	}

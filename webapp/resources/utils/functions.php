@@ -23,18 +23,19 @@ function editConfiguration($_new_config) {
 // Arduino Interface
 // ====================================
 
-function arduino_requestData()
+function arduinoRequestData($sensor_name = "")
 {
-    $shellCommand = escapeshellcmd('python3 ' . SCRIPT_PATH . " get_data");
-    $shellOutput = trim(shell_exec($shellCommand));
+    global $_config;
+	if(empty($sensor_name))
+		$data_raw = file_get_contents($_config->arduino_url . "/sensors");
+	else 
+		$data_raw = file_get_contents($_config->arduino_url . "/sensors". "/". $sensor_name);
 
- 	if(strlen($shellOutput) > 20 || $shellOutput == "NULL" || $shellOutput == "ERROR")
+ 	if(empty($data_raw) || strlen($data_raw) < 3)
  		return array();
  	else
  	{
- 		$it = explode(",", $shellOutput);
- 		$kit = array("temperature", "humidity", "door", "light");
- 		$data = array_combine($kit, $it);
+		$data = json_decode($data_raw);
  		return $data;
  	}
 }
@@ -104,31 +105,32 @@ function wakeUp($platform_name)
 // View utils
 // ====================================
 
-function showSensorsWidgets()
-{
-	$sensors = unserializeData(arduino_requestData());
+function showSensorWidget($sensor) {
+	$sensors = unserializeData(arduinoRequestData($sensor));
 
 	if(!empty($sensors))
-		foreach($sensors as $sensor)
-		{
+		foreach($sensors as $sensor) {
 			$sensor->printWidget();
 		}
 	else
-	{
 		echo '<span class="box bad hide" id="ErrorSensors">
 				<i class="fas fa-exclamation-circle"></i> Error: no data fetched. Reload the page or wait for automatic refresh.
 			</span>';
-	}
-
+	
 }
 
-function showHardwareWidget()
+function showSensorsWidgets()
 {
-	global $_config;
+	$sensors = unserializeData(arduinoRequestData());
 
-	$h = new HardwareActivity($_config->platforms);
-	$h->printWidget();
-
+	if(!empty($sensors))
+		foreach($sensors as $sensor) {
+			$sensor->printWidget();
+		}
+	else 
+		echo '<span class="box bad hide" id="ErrorSensors">
+				<i class="fas fa-exclamation-circle"></i> Error: no data fetched. Reload the page or wait for automatic refresh.
+			 </span>';
 }
 
 function unserializeData($items)
@@ -148,12 +150,16 @@ function unserializeData($items)
 					array_push($sensors, new Humidity($value));
 					break;
 				
-				case 'door' : 
+				case 'door_open' : 
 					array_push($sensors, new Door($value));
 					break;
 
-				case 'light' : 
+				case 'lights_up' : 
 					array_push($sensors, new Light($value));
+					break;
+				
+				case 'intrusion_detection' : 
+					array_push($sensors, new IntrusionDetection($value));
 					break;
 
 				default:
@@ -162,6 +168,16 @@ function unserializeData($items)
 		}
 
 	return $sensors;
+}
+
+
+function showHardwareWidget()
+{
+	global $_config;
+
+	$h = new HardwareActivity($_config->platforms);
+	$h->printWidget();
+
 }
 
 // Extra
