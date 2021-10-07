@@ -1,3 +1,8 @@
+// ====================================================
+//  SERVER MONITORING SYSTEM by Maxelweb
+//  Github.com/Maxelweb/ServerMonitoringSystem
+//  v1.0.0 - october 2021
+// ====================================================
 
 #include "SMS_API.h"
 
@@ -28,9 +33,6 @@ void loop()
 
   // Offline alerts
   sms->checkAlarms();
-  //sms->LedConnected(false); // FIXME: pass if lan is connected
-  sms->checkAlarms();
-
  
   // LAN connection
   api->serve();

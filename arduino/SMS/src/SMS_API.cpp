@@ -163,7 +163,8 @@ void SMS_API::serve(){
                         this->getAllSensors(client);
                     else if(urlRequest.indexOf("sound/test") > -1)
                         this->get(client, "sound_test", sms->emitTestSound());
-
+                    else
+                        this->getHomepage(client);
 
                     // FIXME: not working correctly, part of strings not always is visible
                     // ========================
