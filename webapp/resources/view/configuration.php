@@ -1,13 +1,17 @@
 <section> 
 
-	<h3>Edit configuration</h3>
+	<h3><i class="fas fa-edit"></i> Edit configuration</h3>
 
 	<div class="widgets-container">
-        <form action="?" method="post">
-            <textarea required name="rawconfig" rows="15" cols="5"><?= json_encode($_config); ?></textarea>
+        <form action="?s=config" method="post">
+        <p id="jsonValid"><span class='good'>Json is VALID</span></p>
+        <textarea required name="rawconfig" id="editConfig" onkeyup="updateJsonStatus(isValidJson(this.value));" rows="15"><?= json_encode($_config); ?></textarea>
 
-            <button type="submit">Save</button>
+            <button type="submit" id="saveRaw">Save</button>
         </form>
 	</div>
 
+
 </section>
+
+<script src="resources/view/configuration.js" async></script>

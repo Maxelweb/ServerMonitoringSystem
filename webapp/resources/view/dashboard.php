@@ -18,13 +18,6 @@
 			&nbsp; Loading sensors.. <i class="fas fa-circle-notch fa-spin"></i><br>
 			<?php //showSensorsWidgets(); ?>
 		</div>
-		<span class="box bad hide" id="ErrorHardware">
-			<i class='fas fa-exclamation-circle'></i> An error has occurred while checking hardware activity, retrying soon...
-		</span>
-		<div id="HardwareContainer">
-			&nbsp; Loading hardware status.. <i class="fas fa-circle-notch fa-spin"></i>
-			<?php //showHardwareWidget(); ?>
-		</div>
 	</div>
 
 </section>

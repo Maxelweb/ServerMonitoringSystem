@@ -173,11 +173,8 @@ function unserializeData($items)
 
 function showHardwareWidget()
 {
-	global $_config;
-
-	$h = new HardwareActivity($_config->platforms);
-	$h->printWidget();
-
+	global $_h;
+	$_h->printStaticWidget();
 }
 
 // Extra

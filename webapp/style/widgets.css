@@ -32,6 +32,12 @@
 	vertical-align: top;
 }
 
+.widget-wide {
+	min-width: auto !important;
+	max-width: 100% !important;
+	display: block !important;
+}
+
 
 .widgets-container .box{
 	margin: 10px 5px;

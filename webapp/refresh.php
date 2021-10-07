@@ -6,9 +6,9 @@ if($s == "dashboard-sensors")
 {
 	showSensorsWidgets();
 }
-elseif($s == "dashboard-hardware")
+elseif($s == "hardware")
 {
-	showHardwareWidget();
+	$_h->refreshDeviceRow($id);
 }
 elseif($s == "wakeup")
 {

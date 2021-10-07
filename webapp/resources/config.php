@@ -51,7 +51,7 @@ require_once 'model/Updates.php';
 // Initialize configuration
 
 initializeConfiguration();
-
+$_h = new HardwareActivity($_config->platforms);
 define("NAME", $_config->app_name);
 
 

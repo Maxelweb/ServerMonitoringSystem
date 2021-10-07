@@ -20,9 +20,9 @@
 
 <nav>
 	<a href="?"><i class="fas fa-home"></i> Dashboard</a>
-	<a href="?"><i class="fas fa-server"></i> Wake-On-Lan</a>
+	<a href="?s=wol"><i class="fas fa-server"></i> Wake-On-Lan</a>
 	<a href="?s=webcam"><i class="fas fa-camera"></i> Webcam</a>
-	<a href="?"><i class="fas fa-edit"></i> Configuration</a>
+	<a href="?s=config"><i class="fas fa-edit"></i> Configuration</a>
 	<a href="?s=updates"><i class="fas fa-coffee"></i> Updates</a>
 </nav>
 
