@@ -1,10 +1,9 @@
 #include "SMS_API.h"
 
-SMS_API::SMS_API(SMS * sms, IPAddress ip, IPAddress gateway, IPAddress dns, IPAddress subnet, uint16_t port) {
+SMS_API::SMS_API(SMS * sm, IPAddress ip, IPAddress gateway, IPAddress dns, IPAddress subnet, uint16_t port) {
     
     byte default_mac[] = {0x45, 0x45, 0x45, 0x45, 0x45, 0x45};
-    
-    sms = sms;
+    sms = sm;
     ip_addr = ip;
     gateway_addr = gateway;
     dns_addr = dns;
@@ -63,15 +62,38 @@ void SMS_API::getAllSensors(EthernetClient& client) {
     client.println("Connection: close"); 
     client.println("");
     client.print("{");
-    client.print("\"temperature\":\"" + (String)sms->getTemperature() + "\",");
-    client.print("\"humidity\":\"" + (String)sms->getHumidity() + "\",");
-    client.print("\"door_status\":\""); 
+    client.print("\"temperature\":\"");
+    client.print(sms->getTemperature());
+    client.print("\",");
+    client.print("\"humidity\":\"");
+    client.print(sms->getHumidity());
+    client.print("\",");
+    client.print("\"door_open\":\""); 
     client.print((sms->isDoorOpen() ? "1" : "0")); 
     client.print("\",");
-    client.print("\"lights_status\":\""); 
+    client.print("\"lights_up\":\""); 
     client.print((sms->isLightUp() ? "1" : "0")); 
     client.print("\"");
     client.print("}");
+    return;
+}
+
+void SMS_API::get(EthernetClient& client, String name, int value) {
+    return SMS_API::get(client, name, String(value));
+}
+
+void SMS_API::get(EthernetClient& client, String name, String value) {
+
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-Type: application/json");
+    client.println("Connection: close"); 
+    client.println("");
+    client.print("{");
+    client.print("\"" + name + "\":\"");
+    client.print(value);
+    client.print("\"");
+    client.print("}");
+    return; 
 }
 
 
@@ -95,8 +117,18 @@ void SMS_API::serve(){
                 // Http request has ended (\n char), send a reply
                 if (c == '\n') {
                     
-                    if(urlRequest.indexOf("sensors") > -1)
+                    if(urlRequest.indexOf("sensors/temperature") > -1)
+                        this->get(client, "temperature", sms->getTemperature());
+                    else if(urlRequest.indexOf("sensors/humidity") > -1)
+                        this->get(client, "humidity", sms->getHumidity());
+                    else if(urlRequest.indexOf("sensors/door_open") > -1)
+                        this->get(client, "door_open", sms->isDoorOpen());
+                    else if(urlRequest.indexOf("sensors/lights_up") > -1)
+                        this->get(client, "lights_up", sms->isLightUp());
+                    else if(urlRequest.indexOf("sensors") > -1)
                         this->getAllSensors(client);
+                    else if(urlRequest.indexOf("sound/test") > -1)
+                        this->get(client, "sound_test", sms->emitTestSound());
                     else
                         this->getHomepage(client);
 

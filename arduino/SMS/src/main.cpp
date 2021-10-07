@@ -21,15 +21,15 @@ void setup()
 void loop()
 {
   // Startup sound
-  sms->Started();
+  sms->initStartup();
 
   // Cycle
   sms->updateSensors();
 
   // Offline alerts
-  sms->LedAlerts();
-  sms->LedConnected(false); // FIXME: pass if lan is connected
-  sms->Alarms();
+  sms->checkAlarms();
+  //sms->LedConnected(false); // FIXME: pass if lan is connected
+  sms->checkAlarms();
 
  
   // LAN connection

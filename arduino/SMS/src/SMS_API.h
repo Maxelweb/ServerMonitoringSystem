@@ -1,10 +1,8 @@
 #ifndef SMS_API_h
 #define SMS_API_h
 
-// #include "SPI.h"
 #include "SMS.h"
 #include "Ethernet.h"
-#include "utility/w5100.h"
 
 class SMS_API
 {
@@ -20,10 +18,11 @@ private:
 public:
     SMS_API(SMS * sms, IPAddress ip, IPAddress gateway, IPAddress dns, IPAddress subnet, uint16_t port);
     void startServer();
+    void get(EthernetClient&, String, int);
+    void get(EthernetClient&, String, String);
     void getHomepage(EthernetClient&);
     void getAllSensors(EthernetClient&);
     void serve();
-    ~SMS_API();
 };
 
 

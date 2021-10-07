@@ -33,7 +33,7 @@ void SMS::updateSensors()
 	
 	LightPower = analogRead(LIGHTPIN);
 	DoorDistance = DoorSonar->measureDistanceCm();
-	// Serial.println("Sensors updated!");
+	Serial.println(LightPower);
 }
 
 // Current Sensors Readings
@@ -56,6 +56,8 @@ bool SMS::isDoorOpen()
 
 bool SMS::isLightUp()
 {
+	// pin X = Ground
+	// pin Y = Resistor 10k from a 5v + Analog read
 	// More resistence == Lower value
 	return LightPower < 160;
 }
@@ -63,29 +65,31 @@ bool SMS::isLightUp()
 // Led and Audio alerts
 // ----------------------------------
 
-void SMS::Started()
+void SMS::initStartup()
 {
 	if(!Startup)
 	{
 		NewTone(BUZZPIN, 1000, 500);
-		delay(500);
+		digitalWrite(LEDPIN, HIGH);
+		delay(1000);
+		digitalWrite(LEDPIN, LOW);
 		Startup = true;
 	}
 }
 
-void SMS::LedAlerts()
+void SMS::checkLedAlerts()
 {
-	/* Red Led Cases:
+	/* Yellow Led Cases:
 		- off == Ok
 		- blink == Low / High humidity
 		- on == High temperature
 	*/
 
-	if(getTemperature() > 30)
+	if(getTemperature() > 28)
 	{
 		digitalWrite(LEDPIN, HIGH);
 	}
-	else if(getHumidity() > 60)
+	else if(getHumidity() > 50)
 	{
 		digitalWrite(LEDPIN, LOW);
 		delay(20);
@@ -97,7 +101,7 @@ void SMS::LedAlerts()
 	}
 }
 
-void SMS::LedConnected(bool conn)
+void SMS::checkLedConnection(bool conn)
 {
 	if(!conn)
 	{
@@ -109,7 +113,7 @@ void SMS::LedConnected(bool conn)
 	}
 }
 
-void SMS::Alarms()
+void SMS::checkAlarms()
 {
 	/*	Alarms:
 			- Temperature to high in server room
@@ -122,4 +126,29 @@ void SMS::Alarms()
 			NewTone(BUZZPIN, 800, 100);
 		}
 	}
+}
+
+int SMS::emitTestSound() 
+{
+	NewTone(BUZZPIN,294,125);
+	delay(125);
+	NewTone(BUZZPIN,294,125);
+	delay(125);
+	NewTone(BUZZPIN,587,250);
+	delay(250);
+	NewTone(BUZZPIN,440,250);
+	delay(375);
+	NewTone(BUZZPIN,415,125);
+	delay(250);
+	NewTone(BUZZPIN,392,250);
+	delay(250);
+	NewTone(BUZZPIN,349,250);
+	delay(250);
+	NewTone(BUZZPIN,294,125);
+	delay(125);
+	NewTone(BUZZPIN,349,125);
+	delay(125);
+	NewTone(BUZZPIN,392,125);
+	delay(125);
+	return 1;
 }

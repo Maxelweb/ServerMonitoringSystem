@@ -10,7 +10,7 @@
 #define BUZZPIN 3
 #define LEDCONN 5
 
-#define THPIN 4
+#define THPIN 6
 #define LIGHTPIN A0
 
 #define SONARPIN_ECHO 7
@@ -42,10 +42,11 @@ public:
     int getHumidity() const;
     void updateSensors();
 
-    void Started();
-    void Alarms();
-    void LedAlerts();
-    void LedConnected(bool);
+    void initStartup();
+    void checkAlarms();
+    void checkLedAlerts();
+    void checkLedConnection(bool);
+    int emitTestSound();    
 };
 
 #endif
