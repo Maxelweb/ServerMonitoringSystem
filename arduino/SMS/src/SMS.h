@@ -26,14 +26,15 @@ private:
     UltraSonicDistanceSensor * DoorSonar;
     dht11 * THSensor;
     bool Startup;
-    float Temperature;
-    float Humidity;
+    // float Temperature;
+    // float Humidity;
     double DoorDistance;
     int LightPower;
     unsigned long currentInterval;
 
 public:
     bool EnableAlarm;
+    bool IntrusionDetection;
     SMS();
     void setInitialPinMode();
     bool isDoorOpen();
@@ -44,9 +45,10 @@ public:
 
     void initStartup();
     void checkAlarms();
+    int checkIntrusionDetection();
     void checkLedAlerts();
     void checkLedConnection(bool);
-    int emitTestSound();    
+    int emitTestSound();   
 };
 
 #endif

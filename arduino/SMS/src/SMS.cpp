@@ -3,7 +3,7 @@
 SMS::SMS()
 : DoorSonar(new UltraSonicDistanceSensor(SONARPIN_TRIG, SONARPIN_ECHO)),
 THSensor(new dht11()), Startup(false), DoorDistance(-1), LightPower(-1),
-currentInterval(millis()+2000), EnableAlarm(true)
+currentInterval(millis()+2000), EnableAlarm(true), IntrusionDetection(true)
 { }
 
 void SMS::setInitialPinMode()
@@ -92,7 +92,7 @@ void SMS::checkLedAlerts()
 	else if(getHumidity() > 50)
 	{
 		digitalWrite(LEDPIN, LOW);
-		delay(20);
+		delay(100);
 		digitalWrite(LEDPIN, HIGH);
 	}
 	else
@@ -151,4 +151,15 @@ int SMS::emitTestSound()
 	NewTone(BUZZPIN,392,125);
 	delay(125);
 	return 1;
+}
+
+int SMS::checkIntrusionDetection() {
+	if(IntrusionDetection && isLightUp() && isDoorOpen()){
+		// NewTone(BUZZPIN, 294, 100);
+		// digitalWrite(LEDPIN, HIGH);
+		// delay(20);
+		// digitalWrite(LEDPIN, LOW);
+		return 1;
+	}
+	return 0;
 }

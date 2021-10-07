@@ -14,7 +14,7 @@ private:
     IPAddress dns_addr;
     IPAddress subnet_addr;
     uint16_t port;
-    EthernetServer server = EthernetServer(80);
+    EthernetServer server;
 public:
     SMS_API(SMS * sms, IPAddress ip, IPAddress gateway, IPAddress dns, IPAddress subnet, uint16_t port);
     void startServer();
@@ -22,9 +22,11 @@ public:
     void get(EthernetClient&, String, String);
     void getHomepage(EthernetClient&);
     void getAllSensors(EthernetClient&);
+    void getAllAlerts(EthernetClient&);
+    int toggleIntrusionDetection();
+    int toggleEnableAlarm();
     void serve();
 };
-
 
 
 #endif

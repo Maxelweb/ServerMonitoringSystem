@@ -1,6 +1,6 @@
 #include "SMS_API.h"
 
-SMS_API::SMS_API(SMS * sm, IPAddress ip, IPAddress gateway, IPAddress dns, IPAddress subnet, uint16_t port) {
+SMS_API::SMS_API(SMS * sm, IPAddress ip, IPAddress gateway, IPAddress dns, IPAddress subnet, uint16_t port) : server(EthernetServer(port)){
     
     byte default_mac[] = {0x45, 0x45, 0x45, 0x45, 0x45, 0x45};
     sms = sm;
@@ -73,6 +73,29 @@ void SMS_API::getAllSensors(EthernetClient& client) {
     client.print("\",");
     client.print("\"lights_up\":\""); 
     client.print((sms->isLightUp() ? "1" : "0")); 
+    client.print("\",");
+    client.print("\"intrusion_detection\":\""); 
+    client.print(sms->checkIntrusionDetection()); 
+    client.print("\"");
+    client.print("}");
+    return;
+}
+
+void SMS_API::getAllAlerts(EthernetClient& client) {
+
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-Type: application/json");
+    client.println("Connection: close"); 
+    client.println("");
+    client.print("{");
+    client.print("\"alert_intrusion_detection\":\""); 
+    client.print((sms->IntrusionDetection ? "1" : "0")); 
+    client.print("\",");
+    client.print("\"intrusion_detected\":\""); 
+    client.print(sms->checkIntrusionDetection()); 
+    client.print("\",");
+    client.print("\"alert_enable_alarm\":\""); 
+    client.print((sms->EnableAlarm ? "1" : "0")); 
     client.print("\"");
     client.print("}");
     return;
@@ -89,30 +112,41 @@ void SMS_API::get(EthernetClient& client, String name, String value) {
     client.println("Connection: close"); 
     client.println("");
     client.print("{");
-    client.print("\"" + name + "\":\"");
+    client.print("\"");
+    client.print(name); 
+    client.print("\":\"");
     client.print(value);
     client.print("\"");
     client.print("}");
+    client.println("");
     return; 
 }
 
+int SMS_API::toggleEnableAlarm() {
+    sms->EnableAlarm = sms->EnableAlarm ? false : true;
+    return static_cast<int>(sms->EnableAlarm);
+}
+
+int SMS_API::toggleIntrusionDetection() {
+    sms->IntrusionDetection = sms->IntrusionDetection ? false : true;
+    return static_cast<int>(sms->IntrusionDetection);
+}
 
 void SMS_API::serve(){
     // listen for incoming clients
     EthernetClient client = server.available();
     String urlRequest;
     if (client) {
-        Serial.println("new client");
-        // an http request ends with a blank line
+        // An http request ends with a blank line
         while (client.connected()) {
             if (client.available()) {
                 
                 char c = client.read();
                                 
                 // Getting the entire string, at most 100 characters
-                //if (urlRequest.length() < 100) {
+                if (urlRequest.length() < 100) {
                     urlRequest += c; 
-                // } 
+                } 
                 
                 // Http request has ended (\n char), send a reply
                 if (c == '\n') {
@@ -129,12 +163,36 @@ void SMS_API::serve(){
                         this->getAllSensors(client);
                     else if(urlRequest.indexOf("sound/test") > -1)
                         this->get(client, "sound_test", sms->emitTestSound());
-                    else
-                        this->getHomepage(client);
 
-                    delay(1);
+
+                    // FIXME: not working correctly, part of strings not always is visible
+                    // ========================
+                    // if(urlRequest.indexOf(String("sensors/temperature"), 3) > -1)
+                    //     this->get(client, String("value"), sms->getTemperature());
+                    // else if(urlRequest.indexOf(String("sensors/humidity"), 3) > -1)
+                    //     this->get(client, String("value"), sms->getHumidity());
+                    // else if(urlRequest.indexOf(String("sensors/door_open"), 3) > -1)
+                    //     this->get(client, String("value"), sms->isDoorOpen());
+                    // else if(urlRequest.indexOf(String("sensors/lights_up"), 3) > -1)
+                    //     this->get(client, String("value"), sms->isLightUp());
+                    // else if(urlRequest.indexOf(String("sensors"), 3) > -1)
+                    //     this->getAllSensors(client);   
+                    // else if(urlRequest.indexOf(String("alerts/test"), 3) > -1)
+                    //     this->get(client, String("test"), sms->emitTestSound());
+                    // else if(urlRequest.indexOf(String("alerts"), 3) > -1)
+                    //     this->getAllAlerts(client);
+                    // else
+                    //     this->getHomepage(client);
+
+                    // FIXME: not working at all if attached to the rest
+                    // =========================
+                    // else if(urlRequest.indexOf("alerts/toggleAlarm", 3) > -1)
+                    //     this->get(client, "alert_enable_alarm", toggleEnableAlarm());
+                    // else if(urlRequest.indexOf("alerts/toggleId", 3) > -1)
+                    //     this->get(client, "alert_intrusion_detection", toggleIntrusionDetection());
+
+                    delay(5);
                     client.stop();
-                    Serial.println("goodbye client");
                     urlRequest = "";
                 }
             }
