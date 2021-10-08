@@ -1,6 +1,6 @@
 {
-	"version" : "0.1.1",
-	"date"	: "12-2020",
-	"status"  : "alpha",
-	"description" : "Added camera support, fixed typos in sensors"
+	"version" : "1.0.0",
+	"date"	: "10-2021",
+	"status"  : "stable",
+	"description" : "Major update with webapp improvments and Arduino code rewrote, checkout the release page from Github"
 }
