@@ -1,9 +1,5 @@
 version: '2'
 
-networks:
-  ardu-tracker-net:
-    driver: bridge
-
 services:
   webapp:
     build: ./webapp

@@ -22,4 +22,4 @@
 
 </section>
 
-<script src="resources/view/dashboard.js" async></script>
+<script src="resources/view/js/dashboard.js" async></script>

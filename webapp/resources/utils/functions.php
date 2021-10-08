@@ -6,17 +6,37 @@
 function initializeConfiguration() {
 	global $_config;
 	
-	$configFile = fopen(CONFIG_FILE, "r") or die("Error getting the configuration, the path is probably empty!");
+	$configFile = fopen(CONFIG_FILE, "r") or die("Error retrieving the configuration, the path is probably empty!");
 	$rawFile = fread($configFile, filesize(CONFIG_FILE));
 	$_config = json_decode($rawFile, false);
+	if($_config === NULL) 
+		die("Error retrieving the configuration, the config.json file is corrupted");
 }
 
-function editConfiguration($_new_config) {
-	global $_config;
-	$config_raw = json_encode($_new_config);
-	$configFile = fopen(CONFIG_FILE, "w+") or die("Error editing configuration!");
-	fwrite($configFile, $config_raw);
-	$_config = $_new_config;
+
+
+function editConfiguration($new_config) {
+	global $_config, $_required_config_vars;
+	$config_raw = strip_tags($new_config);
+	$config_decode = json_decode($config_raw);
+	if($config_decode === NULL)
+		return false;
+	else {
+
+		// TODO: add JSON-schema validator instaed of this
+
+		if(count($_required_config_vars) != count(array_keys( (array) $config_decode)))
+			return false;
+
+		foreach($_required_config_vars as $key => $val)
+			if(!array_key_exists($val, (array) $config_decode))
+				return false;
+		
+		$configFile = fopen(CONFIG_FILE, "w+") or die("Error editing configuration!");
+		fwrite($configFile, json_encode($config_decode));
+		$_config = $config_decode;
+	}
+	return true;
 }
 
 
@@ -27,11 +47,11 @@ function arduinoRequestData($sensor_name = "")
 {
     global $_config;
 	if(empty($sensor_name))
-		$data_raw = file_get_contents($_config->arduino_url . "/sensors");
+		$data_raw = @file_get_contents($_config->arduino_url . "/sensors");
 	else 
-		$data_raw = file_get_contents($_config->arduino_url . "/sensors". "/". $sensor_name);
+		$data_raw = @file_get_contents($_config->arduino_url . "/sensors". "/". $sensor_name);
 
- 	if(empty($data_raw) || strlen($data_raw) < 3)
+ 	if($data_raw === false || empty($data_raw) || strlen($data_raw) < 3)
  		return array();
  	else
  	{
@@ -113,7 +133,7 @@ function showSensorWidget($sensor) {
 			$sensor->printWidget();
 		}
 	else
-		echo '<span class="box bad hide" id="ErrorSensors">
+		echo '<span class="box bad" id="ErrorSensors">
 				<i class="fas fa-exclamation-circle"></i> Error: no data fetched. Reload the page or wait for automatic refresh.
 			</span>';
 	
@@ -123,14 +143,14 @@ function showSensorsWidgets()
 {
 	$sensors = unserializeData(arduinoRequestData());
 
-	if(!empty($sensors))
-		foreach($sensors as $sensor) {
+	if(count($sensors) != 0){
+		foreach($sensors as $sensor) 
 			$sensor->printWidget();
-		}
-	else 
-		echo '<span class="box bad hide" id="ErrorSensors">
+	} else { 
+		echo '<span class="box bad" id="ErrorSensors">
 				<i class="fas fa-exclamation-circle"></i> Error: no data fetched. Reload the page or wait for automatic refresh.
 			 </span>';
+	}
 }
 
 function unserializeData($items)

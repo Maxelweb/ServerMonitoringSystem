@@ -1,5 +1,3 @@
-// Server Monitoring System - Dashboard
-
 
 /* Globals */
 
@@ -58,45 +56,6 @@ function updateSensorsMonitor() {
     });
 }
 
-function updateHardwareMonitor() {
-    var Err = $("#ErrorHardware");
-
-    $.ajax({
-        url: "refresh.php?s=dashboard-hardware", 
-        error: function () 
-        {
-            if(Err.hasClass("hide")) 
-                Err.removeClass("hide");
-        },
-        success: function(result) 
-        {
-            if(!Err.hasClass("hide")) 
-                Err.addClass("hide");
-            $("#HardwareContainer").html(result);
-        }
-    });
-}
-
-
-function wakeUp(hw)
-{
-   var Err = $("#ErrorHardware");
-
-    $.ajax({
-        url: "refresh.php?s=wakeup&id="+hw, 
-        error: function () 
-        {
-            if(Err.hasClass("hide")) 
-                Err.removeClass("hide");
-        },
-        success: function(result) 
-        {
-            if(!Err.hasClass("hide")) 
-                Err.addClass("hide");
-        }
-    }); 
-}
-
 
 $(document).ready(function() {
 
@@ -114,3 +73,22 @@ $(document).ready(function() {
 });
 
 
+
+// function updateHardwareMonitor() {
+//     var Err = $("#ErrorHardware");
+
+//     $.ajax({
+//         url: "refresh.php?s=dashboard-hardware", 
+//         error: function () 
+//         {
+//             if(Err.hasClass("hide")) 
+//                 Err.removeClass("hide");
+//         },
+//         success: function(result) 
+//         {
+//             if(!Err.hasClass("hide")) 
+//                 Err.addClass("hide");
+//             $("#HardwareContainer").html(result);
+//         }
+//     });
+// }

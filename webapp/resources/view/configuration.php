@@ -14,4 +14,4 @@
 
 </section>
 
-<script src="resources/view/configuration.js" async></script>
+<script src="resources/view/js/configuration.js" async></script>

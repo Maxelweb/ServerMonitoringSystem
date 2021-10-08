@@ -7,7 +7,10 @@ FROM php:7.4-apache-buster
 
 # Moving the site
 COPY . /var/www/html/
+RUN chown -R www-data:www-data /var/www/html/
 
+# REMOVED
+# ------------------
 # Adding Python packages
-RUN apt-get update && apt-get install -y python3 python-pip
-RUN pip install zmq
+# RUN apt-get update && apt-get install -y python3 python-pip
+# RUN pip install zmq

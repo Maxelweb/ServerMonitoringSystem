@@ -35,6 +35,7 @@ if(DEBUG)
 
 // Initialize global variables
 
+$_required_config_vars = array("app_name","wol_broadcast","webcam_url","arduino_url","platforms");
 $_config = (object) array();
 $s = isset($_GET['s']) ? $_GET['s'] : "";
 $a = isset($_GET['a']) ? $_GET['a'] : 0;

@@ -13,4 +13,4 @@
 
 </section>
 
-<script src="resources/view/wol.js" async></script>
+<script src="resources/view/js/wol.js" async></script>
