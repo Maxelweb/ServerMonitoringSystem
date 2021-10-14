@@ -33,7 +33,6 @@ void SMS::updateSensors()
 	
 	LightPower = analogRead(LIGHTPIN);
 	DoorDistance = DoorSonar->measureDistanceCm();
-	Serial.println(LightPower);
 }
 
 // Current Sensors Readings

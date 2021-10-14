@@ -2,7 +2,7 @@
 
 SMS_API::SMS_API(SMS * sm, IPAddress ip, IPAddress gateway, IPAddress dns, IPAddress subnet, uint16_t port) : server(EthernetServer(port)){
     
-    byte default_mac[] = {0x45, 0x45, 0x45, 0x45, 0x45, 0x45};
+    byte default_mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
     sms = sm;
     ip_addr = ip;
     gateway_addr = gateway;
@@ -14,6 +14,8 @@ SMS_API::SMS_API(SMS * sm, IPAddress ip, IPAddress gateway, IPAddress dns, IPAdd
 
 
 void SMS_API::startServer(){
+    
+    // Start with DHCP
     Ethernet.begin(mac_addr, ip_addr, dns_addr, gateway_addr, subnet_addr);
     server.begin();
     return;
@@ -27,10 +29,11 @@ void SMS_API::getHomepage(EthernetClient& client) {
     client.println();
     client.println("<!DOCTYPE HTML>");
     client.println("<head>");
-    client.println("<title>Server Monitoring System - Arduino Web</title>");
+    client.println("<title>Server Monitoring System - Arduino Web Endpoint</title>");
     client.println("<style>body{font-family: arial, sans-serif; font-size: 110%; background-color: #333; color: #CCC;} a {color: #008184} a:hover {color: #FFF} img {max-width: 100%; display:block; margin: 20px 0; border-radius:8px;} </style>");
+    client.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
     client.println("</head><html><body>");
-    client.println("<img src='https://debug.ovh/images/yes-jim.gif' width='240'>");
+    client.println("<img src='https://debug.ovh/images/sms.png' width='240'>");
     client.println("<h1>Server Monitoring System <small style='color: #FFF'>by Maxelweb</small></h1>");
     client.println("<a href='https://github.com/Maxelweb/ServerMonitoringSystem'>Checkout the project repository on Github</a> <br><br>");
     client.println("Welcome! It looks like everything is working&trade; so far..");
@@ -45,11 +48,11 @@ void SMS_API::getHomepage(EthernetClient& client) {
     client.print("</li><li><b>Subnet mask:</b> ");
     client.print(subnet_addr);
     client.print("</li><li><b>Uptime:</b> ");
-    client.print((millis()/1000/60/60/24));
+    client.print(uptime::getDays());
     client.print(" days, ");
-    client.print((millis()/1000/60/60));
+    client.print(uptime::getHours());
     client.print(" hours, ");
-    client.print((millis()/1000/60));
+    client.print(uptime::getMinutes());
     client.print(" minutes</li></ul>");
     client.println("</body></html>");
     return;

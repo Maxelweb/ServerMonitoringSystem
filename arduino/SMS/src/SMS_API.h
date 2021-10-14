@@ -3,6 +3,7 @@
 
 #include "SMS.h"
 #include "Ethernet.h"
+#include "uptime.h"
 
 class SMS_API
 {

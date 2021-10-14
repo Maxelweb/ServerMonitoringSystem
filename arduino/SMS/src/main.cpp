@@ -10,7 +10,7 @@
 SMS * sms = new SMS();
 SMS_API * api = new SMS_API(
                       sms,
-                      IPAddress(192, 168, 1, 1),  
+                      IPAddress(192, 168, 1, 3),  
                       IPAddress(192, 168, 1, 254), 
                       IPAddress(192, 168, 1, 254), 
                       IPAddress(255,255,255,0), 
