@@ -2,7 +2,7 @@
     "app_name": "Home",
     "wol_broadcast": "255.255.255.0",
     "webcam_url": "",
-    "arduino_url":"http://192.168.1.1",
+    "arduino_url":"http://192.168.1.3",
     "platforms" : [
     {
         "name": "example1",
