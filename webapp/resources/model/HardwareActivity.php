@@ -25,6 +25,7 @@ class HardwareActivity
 		if($key !== false)
 		{
 			exec("ping -c 1 ".$this->platforms[$key]->ip_addr, $output, $result);
+			var_dump($result);
 			$this->cplat[$name] = $result == 0;
 			return $result == 0;
 		}
@@ -60,22 +61,22 @@ class HardwareActivity
 					</div>	
 					<div class="content">
 						<div class="responsive">
-							<table>
+							<table id="hardwareTable" class="sortable">
 								<tr>
-									<th>Device</th>
-									<th>IP Address</th>
-									<th>Status</th>
-									<th>Action</th>
+									<th onclick="sortTable(0)">Device &#8597;</th>
+									<th onclick="sortTable(1)">IP Address &#8597;</th>
+									<th onclick="sortTable(2)">Status &#8597;</th>
+									<th onclick="sortTable(3)">Action &#8597;</th>
 								</tr>';
 
 					if(!empty($this->platforms))
+					sort($this->platforms);
 					foreach ($this->platforms as $item) 
 						echo "<tr class='itemDevice' id='$item->name'>
 								<td>".$item->name."</td>
 								<td><code>".$item->ip_addr."</code></td>
 								<td class='itemDeviceStatus'><i class='fas fa-circle-notch fa-spin'></i></td>
 								<td class='itemDeviceAction'><i class='fas fa-circle-notch fa-spin'></i>
-								<small><a href='javascript:void(0)' onclick=\"wakeUp('".$item->name."')\">Wake up</a></small>
 								</td>
 								</tr>";
 
@@ -97,7 +98,7 @@ class HardwareActivity
 			echo "	<td>".$item->name."</td>
 					<td><code>".$item->ip_addr."</code></td>
 					<td class='itemDeviceStatus'>".($activity ? success("online", 1) : error("offline", 1))."</td>
-					<td class='itemDeviceAction'>".(!$activity ? "<small><a href='javascript:void(0)' onclick=\"wakeUp('".$item->name."')\">Wake up</a></small>" : "-") . "
+					<td class='itemDeviceAction'>".(!$activity && !empty($item->mac_addr) ? "<small><a href='javascript:void(0)' onclick=\"wakeUp('".$item->name."')\">Wake up</a></small>" : "-") . "
 					</td>";
 		}
 

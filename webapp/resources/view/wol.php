@@ -6,6 +6,8 @@
 		<span class="box bad hide" id="ErrorHardware">
 			<i class='fas fa-exclamation-circle'></i> An error has occurred while checking hardware activity, retrying soon...
 		</span>
+		<span class="box hide" id="MessageHardware">
+		</span>
 		<div id="HardwareContainer">
             <?php showHardwareWidget(); ?>
 		</div>

@@ -130,6 +130,9 @@ table{
 td,th{
 	padding: 3px 5px;
 }
+table.sortable th{
+	cursor: pointer;
+}
 tr{
 	background-color:  #E9E9E9;
 	border-bottom: 1px solid #CCC;

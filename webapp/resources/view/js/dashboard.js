@@ -35,7 +35,6 @@ function toggleAutoRefresh() {
         {
             timestamp = 0;
             updateSensorsMonitor();
-            updateHardwareMonitor();
         }
 }
 
