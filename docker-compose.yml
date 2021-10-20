@@ -11,6 +11,6 @@ services:
     # ports:
     #   - "8080:80"
     #   - "4430:443"
-    volumes: 
-      - ./webapp:/var/www/html/
+    #volumes: 
+    #  - ./webapp:/var/www/html/
     network_mode: "host"
