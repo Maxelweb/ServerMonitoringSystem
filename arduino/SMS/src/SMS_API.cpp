@@ -15,10 +15,9 @@ SMS_API::SMS_API(SMS * sm, IPAddress ip, IPAddress gateway, IPAddress dns, IPAdd
 
 void SMS_API::startServer(){
     
-    // Start with DHCP
+    // Start with Static ip
     Ethernet.begin(mac_addr, ip_addr, dns_addr, gateway_addr, subnet_addr);
     server.begin();
-    return;
 }
 
 

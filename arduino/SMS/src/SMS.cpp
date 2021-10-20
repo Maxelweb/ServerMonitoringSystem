@@ -16,7 +16,10 @@ void SMS::setInitialPinMode()
 
 	pinMode(THPIN, INPUT);
 	pinMode(LIGHTPIN, INPUT);
-	
+
+	// disable SD card if one in the slot
+  	pinMode(4,OUTPUT);
+  	digitalWrite(4,HIGH);
 }
 
 // Update Readings

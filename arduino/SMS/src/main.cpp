@@ -13,7 +13,7 @@ SMS_API * api = new SMS_API(
                       IPAddress(192, 168, 1, 3),  
                       IPAddress(192, 168, 1, 254), 
                       IPAddress(192, 168, 1, 254), 
-                      IPAddress(255,255,255,0), 
+                      IPAddress(255, 255, 255, 0), 
                       80);
 
 void setup()
